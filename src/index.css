@@ -1,0 +1,289 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: #0F172A;
+    color: #FDFBF7;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(212, 175, 55, 0.3);
+    color: #FDFBF7;
+  }
+}
+
+/* ─── Component Layer ───────────────────────────── */
+@layer components {
+
+  /* Navigation */
+  .nav-glass {
+    background: rgba(15, 23, 42, 0);
+    backdrop-filter: blur(0px);
+    border-bottom: 1px solid transparent;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+  }
+  .nav-glass.scrolled {
+    background: rgba(15, 23, 42, 0.88);
+    backdrop-filter: blur(16px);
+    border-bottom-color: rgba(212, 175, 55, 0.12);
+  }
+
+  /* Gold CTA Button */
+  .btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #D4AF37;
+    color: #0F172A;
+    font-weight: 600;
+    border-radius: 9999px;
+    padding: 0.875rem 2rem;
+    font-size: 0.9375rem;
+    letter-spacing: 0.02em;
+    transition: background 0.2s ease, transform 0.15s ease;
+    animation: pulseGold 2.8s ease-in-out infinite;
+    white-space: nowrap;
+    cursor: pointer;
+    border: none;
+    outline: none;
+  }
+  .btn-gold:hover {
+    background: #E8C844;
+    transform: translateY(-1px);
+    animation: none;
+    box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+  }
+
+  /* Ghost Button */
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(253, 251, 247, 0.2);
+    color: rgba(253, 251, 247, 0.7);
+    border-radius: 9999px;
+    padding: 0.875rem 2rem;
+    font-size: 0.9375rem;
+    letter-spacing: 0.02em;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+    background: transparent;
+    outline: none;
+  }
+  .btn-ghost:hover {
+    border-color: rgba(212, 175, 55, 0.5);
+    color: #D4AF37;
+  }
+
+  /* Section Label */
+  .section-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(212, 175, 55, 0.55);
+    margin-bottom: 1rem;
+  }
+
+  /* Artist Card */
+  .artist-card {
+    background: linear-gradient(
+      145deg,
+      rgba(30, 41, 59, 0.7) 0%,
+      rgba(15, 23, 42, 0.85) 100%
+    );
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    border-radius: 1.25rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .artist-card:hover {
+    border-color: rgba(212, 175, 55, 0.55);
+    transform: translateY(-6px);
+    box-shadow:
+      0 24px 48px rgba(0, 0, 0, 0.35),
+      0 0 60px rgba(212, 175, 55, 0.07);
+  }
+
+  /* FAQ item */
+  .faq-item {
+    border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+  }
+
+  /* Step Card */
+  .step-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Testimonial Card */
+  .testimonial-card {
+    background: linear-gradient(
+      135deg,
+      rgba(212, 175, 55, 0.04) 0%,
+      rgba(15, 23, 42, 0.6) 100%
+    );
+    border: 1px solid rgba(212, 175, 55, 0.14);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    transition: border-color 0.3s ease;
+  }
+  .testimonial-card:hover {
+    border-color: rgba(212, 175, 55, 0.35);
+  }
+}
+
+/* ─── Utility Layer ─────────────────────────────── */
+@layer utilities {
+  /* Hide scrollbar */
+  .scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  /* Gold gradient text */
+  .text-gold-gradient {
+    background: linear-gradient(
+      100deg,
+      #D4AF37 0%,
+      #F0D060 45%,
+      #D4AF37 60%,
+      #B8962E 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3.5s linear infinite;
+  }
+
+  /* Step number gradient text */
+  .text-step-number {
+    background: linear-gradient(135deg, #D4AF37, #B8962E);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Hero overlay gradient */
+  .hero-overlay {
+    background: linear-gradient(
+      to bottom,
+      rgba(15, 23, 42, 0.25) 0%,
+      rgba(15, 23, 42, 0.45) 55%,
+      rgba(15, 23, 42, 0.9) 100%
+    );
+  }
+
+  /* Subtle background gradient for the hero placeholder */
+  .hero-bg-gradient {
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 35%, rgba(212, 175, 55, 0.07) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 40% at 80% 70%, rgba(30, 41, 90, 0.5) 0%, transparent 60%),
+      linear-gradient(160deg, #0F172A 0%, #162032 50%, #0F172A 100%);
+  }
+
+  /* Film grain texture */
+  .grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.038;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+  }
+
+  /* Fade in staggered */
+  .anim-1 { animation: fadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both; }
+  .anim-2 { animation: fadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both; }
+  .anim-3 { animation: fadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both; }
+  .anim-4 { animation: fadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both; }
+  .anim-5 { animation: fadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.7s both; }
+
+  /* Scroll indicator line */
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(253, 251, 247, 0.35), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+}
+
+/* ─── Keyframes ─────────────────────────────────── */
+@keyframes pulseGold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.65); }
+  50%       { box-shadow: 0 0 0 14px rgba(212, 175, 55, 0); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 0.8; transform: scaleY(0.85); }
+}
+
+@keyframes tickerEnter {
+  from { opacity: 0; transform: translateY(60%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tickerExit {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-60%); }
+}
+
+/* ─── Ticker ────────────────────────────────────── */
+.ticker-word-enter {
+  animation: tickerEnter 0.38s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+.ticker-word-exit {
+  animation: tickerExit 0.38s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* ─── Waveform ──────────────────────────────────── */
+.waveform-bar {
+  fill: rgba(212, 175, 55, 0.35);
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: wavePlay 1.4s ease-in-out infinite alternate;
+}
+
+.testimonial-card:hover .waveform-bar {
+  fill: rgba(212, 175, 55, 0.65);
+}
+
+@keyframes wavePlay {
+  0%   { transform: scaleY(1);    opacity: 0.55; }
+  100% { transform: scaleY(0.45); opacity: 0.25; }
+}
+
+/* ─── Mobile tweaks ─────────────────────────────── */
+@media (max-width: 640px) {
+  .btn-gold,
+  .btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+}
