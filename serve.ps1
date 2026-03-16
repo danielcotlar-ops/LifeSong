@@ -32,7 +32,7 @@ while ($listener.IsListening) {
     $res  = $ctx.Response
 
     $urlPath = $req.Url.LocalPath
-    if ($urlPath -eq '/') { $urlPath = '/preview.html' }
+    if ($urlPath -eq '/') { $urlPath = '/index.html' }
 
     $filePath = Join-Path $root $urlPath.TrimStart('/')
 
