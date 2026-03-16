@@ -2,11 +2,11 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 
 /* ─── Data ───────────────────────────────────────── */
 const HERO_VIDEOS = [
-  '14092529_3840_2160_30fps.mp4',
-  '3704443-uhd_4096_2160_25fps.mp4',
-  '3704252-uhd_4096_2160_25fps.mp4',
-  '4873447-hd_1920_1080_25fps.mp4',
-  '5617146-uhd_3840_2160_25fps.mp4',
+  'https://danielcotlar-ops.github.io/lifesong-assets/14092529_3840_2160_30fps.mp4',
+  'https://danielcotlar-ops.github.io/lifesong-assets/3704443-uhd_4096_2160_25fps.mp4',
+  'https://danielcotlar-ops.github.io/lifesong-assets/3704252-uhd_4096_2160_25fps.mp4',
+  'https://danielcotlar-ops.github.io/lifesong-assets/4873447-hd_1920_1080_25fps.mp4',
+  'https://danielcotlar-ops.github.io/lifesong-assets/5617146-uhd_3840_2160_25fps.mp4',
 ]
 
 const TICKER_WORDS = [
@@ -15,7 +15,7 @@ const TICKER_WORDS = [
   "I'M SORRY",
   "MOTHER'S DAY",
   'CONGRATULATIONS',
-  'BABY',
+  'NEW BABY',
   'GRADUATION',
 ]
 
@@ -137,6 +137,106 @@ const FAQS = [
   },
 ]
 
+/* ─── Intake Engine Config ─── */
+const FORM_CONFIG = [
+  {
+    id: 'recipient',
+    questionText: "First things first, who is the lucky person?",
+    subtext: "Just a first name is perfect.",
+    fields: [
+      { id: 'recipientName', type: 'text_input', placeholder: 'e.g. Sarah', required: true }
+    ]
+  },
+  {
+    id: 'occasion',
+    questionText: "What are we celebrating?",
+    subtext: "Pick the occasion that fits best.",
+    fields: [
+      { id: 'occasion', type: 'card_select', required: true, options: [
+        { value: 'birthday', label: 'Birthday', emoji: '🎂' },
+        { value: 'mothers-day', label: "Mother's Day", emoji: '💐' },
+        { value: 'valentines', label: "Valentine's Day", emoji: '❤️' },
+        { value: 'anniversary', label: 'Anniversary', emoji: '💍' },
+        { value: 'celebration-of-life', label: 'Celebration of Life', emoji: '🌟' },
+        { value: 'general', label: 'General story / no occasion', emoji: '📖', fullWidth: true },
+      ]}
+    ]
+  },
+  {
+    id: 'vibe',
+    questionText: "Set the vibe.",
+    subtext: "How should the song feel? Pick the closest match.",
+    fields: [
+      { id: 'tone', type: 'pill_select', required: true, options: [
+        { value: 'emotional', label: 'Emotional / Heartfelt' },
+        { value: 'happy', label: 'Happy / Upbeat' },
+        { value: 'calm', label: 'Calm / Reflective' },
+        { value: 'romantic', label: 'Romantic' },
+        { value: 'fun', label: 'Fun / Playful' },
+      ]},
+      { id: 'energy', type: 'segmented_control', label: 'Energy level', required: true, options: [
+        { value: 'soft', label: '☁️ Soft' },
+        { value: 'medium', label: '🎵 Medium' },
+        { value: 'high', label: '⚡ High' },
+      ]}
+    ]
+  },
+  {
+    id: 'emotion',
+    questionText: "How should the listener feel by the end?",
+    subtext: "Pick all that resonate.",
+    fields: [
+      { id: 'feelings', type: 'multi_select', required: true, options: [
+        { value: 'loved', label: 'Loved' },
+        { value: 'appreciated', label: 'Appreciated' },
+        { value: 'proud', label: 'Proud' },
+        { value: 'emotional', label: 'Emotional / Teary' },
+        { value: 'inspired', label: 'Inspired' },
+        { value: 'humorous', label: 'Humorous' },
+      ]},
+      { id: 'relationship', type: 'pill_select', label: 'What is your relationship to them?', required: true, options: [
+        { value: 'partner', label: 'Partner' },
+        { value: 'parent', label: 'Parent' },
+        { value: 'child', label: 'Child' },
+        { value: 'friend', label: 'Friend' },
+        { value: 'self', label: 'Self' },
+      ]}
+    ]
+  },
+  {
+    id: 'themes',
+    questionText: "Pick up to 3 themes to weave into the lyrics.",
+    subtext: "These guide the songwriter's direction.",
+    fields: [
+      { id: 'themes', type: 'multi_select', required: true, maxSelect: 3, options: [
+        { value: 'gratitude', label: 'Gratitude' },
+        { value: 'support', label: 'Support' },
+        { value: 'shared-memories', label: 'Shared Memories' },
+        { value: 'growth', label: 'Growth' },
+        { value: 'future-hopes', label: 'Future Hopes' },
+        { value: 'celebration', label: 'Celebration' },
+        { value: 'resilience', label: 'Resilience' },
+      ]}
+    ]
+  },
+  {
+    id: 'personal',
+    questionText: "Make it personal.",
+    subtext: "All optional — but the more you share, the better the song.",
+    fields: [
+      { id: 'chorusHook', type: 'text_input', label: "The 'Chorus' Hook", placeholder: 'e.g. The Best Mom in Brooklyn', required: false },
+      { id: 'goldenMemory', type: 'textarea', label: "A 'Golden Memory' or inside joke", placeholder: 'A specific moment, inside joke, or detail that makes them smile...', maxLength: 300, required: false },
+      { id: 'avoid', type: 'text_input', label: 'Anything we should steer clear of?', placeholder: 'Sensitive topics or names to avoid', required: false },
+    ]
+  },
+  {
+    id: 'review',
+    questionText: "Here's what we've got.",
+    subtext: "Review your answers before we send this to our songwriters.",
+    fields: []
+  },
+]
+
 /* ─── Ticker ─────────────────────────────────────── */
 const TICKER_DURATIONS = { 0: 2000 } // index 0 = BIRTHDAY stays 2s, rest 3s
 
@@ -151,7 +251,7 @@ function Ticker() {
     let max = 0
     const spans = measRef.current.querySelectorAll('[data-measure]')
     spans.forEach(s => { if (s.offsetWidth > max) max = s.offsetWidth })
-    setWidth(max + 12)
+    setWidth(max + 20)
   }, [])
 
   useEffect(() => {
@@ -178,7 +278,7 @@ function Ticker() {
       <span
         aria-live="polite"
         className="relative inline-block align-baseline"
-        style={{ height: '1.2em', width: width || 'auto', maxWidth: '85vw', minWidth: width ? undefined : '6ch', verticalAlign: 'baseline', overflow: 'visible', clipPath: 'inset(-5% -8% -5% -8%)' }}
+        style={{ height: '1.2em', width: width || 'auto', maxWidth: '92vw', minWidth: width ? undefined : '6ch', verticalAlign: 'baseline', overflow: 'visible', clipPath: 'inset(-5% -12% -5% -12%)' }}
       >
         {TICKER_WORDS.map((word, i) => {
           const isActive = i === state.current
@@ -212,7 +312,7 @@ function Ticker() {
 }
 
 /* ─── Nav ────────────────────────────────────────── */
-function Nav() {
+function Nav({ onStart }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -244,7 +344,7 @@ function Nav() {
         </nav>
 
         {/* Desktop CTA */}
-        <a href="#" className="btn-gold hidden text-sm px-5 py-2.5 md:inline-flex">
+        <a href="#" onClick={e=>{e.preventDefault();onStart&&onStart()}} className="btn-gold hidden text-sm px-5 py-2.5 md:inline-flex">
           Start My Song
         </a>
 
@@ -282,7 +382,7 @@ function Nav() {
               {l.label}
             </a>
           ))}
-          <a href="#" className="btn-gold mt-4 text-sm">
+          <a href="#" onClick={e=>{e.preventDefault();setOpen(false);onStart&&onStart()}} className="btn-gold mt-4 text-sm">
             Start My Song
           </a>
         </div>
@@ -292,7 +392,7 @@ function Nav() {
 }
 
 /* ─── Hero ───────────────────────────────────────── */
-function Hero() {
+function Hero({ onStart }) {
   const [active, setActive] = useState(0)
   const videoRefs = useRef([])
 
@@ -346,9 +446,9 @@ function Hero() {
       {/* ── Content ── */}
       <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         {/* Badge */}
-        <div className="anim-1 mb-8 inline-flex items-center gap-2.5 rounded-full border border-gold/35 bg-gold/[0.08] px-4 py-1.5 backdrop-blur-sm">
-          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
-          <span className="text-[0.7rem] font-normal uppercase tracking-[0.22em] text-gold/90">
+        <div className="anim-1 mb-8 inline-flex max-w-[90vw] items-center gap-2.5 rounded-full border border-gold/35 bg-gold/[0.08] px-4 py-1.5 backdrop-blur-sm">
+          <span className="h-1.5 w-1.5 flex-shrink-0 animate-pulse rounded-full bg-gold" />
+          <span className="text-[clamp(0.58rem,1.8vw,0.7rem)] font-normal uppercase tracking-[clamp(0.1em,0.5vw,0.22em)] text-gold/90">
             Studio Quality · 24-Hour Delivery
           </span>
         </div>
@@ -362,7 +462,7 @@ function Hero() {
 
         {/* CTA row */}
         <div className="anim-3 mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <button className="btn-gold px-8 py-4 text-base">
+          <button onClick={onStart} className="btn-gold px-8 py-4 text-base">
             Start My Song&nbsp;→
           </button>
           <button className="btn-ghost px-8 py-4 text-base">
@@ -388,13 +488,14 @@ function Hero() {
 /* ─── Occasion Pills ─────────────────────────────── */
 const OCCASIONS = ['Birthday', 'Anniversary', 'Apology', 'Engagement', 'Memorial', 'Graduation', 'Just Because']
 
-function OccasionPills() {
+function OccasionPills({ onStart }) {
   return (
     <div className="flex flex-wrap gap-1.5 justify-center mt-3">
       {OCCASIONS.map(o => (
         <a
           key={o}
           href="#"
+          onClick={e=>{e.preventDefault();onStart&&onStart()}}
           className="rounded-full border border-gold/30 bg-gold/[0.06] px-3 py-1 text-[0.68rem] tracking-wide text-gold/85 no-underline whitespace-nowrap transition-all hover:bg-gold/[0.18] hover:border-gold/60 hover:text-gold hover:scale-105"
         >
           {o}
@@ -425,7 +526,7 @@ function GenreScroller() {
 }
 
 /* ─── How It Works ───────────────────────────────── */
-function HowItWorks() {
+function HowItWorks({ onStart }) {
   return (
     <section id="how-it-works" className="py-28 md:py-36 px-6">
       <div className="mx-auto max-w-[76rem]">
@@ -465,7 +566,7 @@ function HowItWorks() {
               <p className="mx-auto max-w-[16rem] text-[0.85rem] font-light leading-relaxed text-cream/50">
                 {step.body}
               </p>
-              {step.hasOccasionPills && <OccasionPills />}
+              {step.hasOccasionPills && <OccasionPills onStart={onStart} />}
               {step.hasGenreScroller && <GenreScroller />}
             </div>
           ))}
@@ -473,7 +574,7 @@ function HowItWorks() {
 
         {/* Bottom CTA */}
         <div className="mt-16 flex justify-center">
-          <a href="#" className="btn-gold px-8 py-3.5 text-sm">
+          <a href="#" onClick={e=>{e.preventDefault();onStart&&onStart()}} className="btn-gold px-8 py-3.5 text-sm">
             Start My Song&nbsp;→
           </a>
         </div>
@@ -721,7 +822,7 @@ function FAQ() {
 }
 
 /* ─── Final CTA ──────────────────────────────────── */
-function FinalCTA() {
+function FinalCTA({ onStart }) {
   return (
     <section className="px-6 pb-28 md:pb-36">
       <div className="mx-auto max-w-4xl">
@@ -746,7 +847,7 @@ function FinalCTA() {
           </p>
 
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <button className="btn-gold px-10 py-4 text-base">
+            <button onClick={onStart} className="btn-gold px-10 py-4 text-base">
               Start My Song&nbsp;→
             </button>
             <p className="text-xs font-light text-cream/30">
@@ -986,19 +1087,301 @@ function SpinPopup() {
   )
 }
 
+/* ─── Intake Engine ──────────────────────────────── */
+function FormField({ field, value, onChange, onAutoAdvance }) {
+  if (field.type === 'text_input') {
+    const hasLabel = !!field.label
+    return (
+      <div className="mb-6">
+        {field.label && <div className="mb-2 text-xs uppercase tracking-widest text-cream/40">{field.label}</div>}
+        <input
+          type="text"
+          value={value || ''}
+          onChange={e => onChange(e.target.value)}
+          onKeyDown={e => { if (e.key === 'Enter' && value && onAutoAdvance) onAutoAdvance() }}
+          placeholder={field.placeholder}
+          className={hasLabel
+            ? "w-full rounded-xl border border-gold/20 bg-gold/[0.04] p-4 text-sm text-cream outline-none transition-colors focus:border-gold"
+            : "w-full border-b-2 border-gold/25 bg-transparent py-4 font-serif text-xl italic text-cream outline-none transition-colors focus:border-gold"
+          }
+        />
+      </div>
+    )
+  }
+
+  if (field.type === 'textarea') {
+    const len = (value || '').length
+    return (
+      <div className="mb-6">
+        {field.label && <div className="mb-2 text-xs uppercase tracking-widest text-cream/40">{field.label}</div>}
+        <textarea
+          value={value || ''}
+          onChange={e => { if (!field.maxLength || e.target.value.length <= field.maxLength) onChange(e.target.value) }}
+          placeholder={field.placeholder}
+          rows={4}
+          className="w-full rounded-xl border border-gold/20 bg-gold/[0.04] p-4 text-sm text-cream outline-none transition-colors focus:border-gold"
+          style={{ resize: 'vertical' }}
+        />
+        {field.maxLength && (
+          <div className={`mt-1 text-right text-[0.7rem] ${len > field.maxLength * 0.9 ? 'text-gold' : 'text-cream/25'}`}>
+            {len}/{field.maxLength}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  if (field.type === 'card_select') {
+    return (
+      <div className="grid grid-cols-2 gap-3">
+        {field.options.map(opt => (
+          <div key={opt.value}
+            onClick={() => { onChange(opt.value); if (onAutoAdvance) setTimeout(onAutoAdvance, 350); }}
+            className={`cursor-pointer rounded-xl border p-5 text-center transition-all ${opt.fullWidth ? 'col-span-2' : ''} ${value === opt.value ? 'border-gold bg-gold/[0.12] shadow-[0_0_20px_rgba(212,175,55,0.1)]' : 'border-gold/15 bg-gold/[0.04] hover:border-gold/40 hover:-translate-y-0.5'}`}
+          >
+            <div className="mb-2 text-[1.75rem]">{opt.emoji}</div>
+            <div className="text-sm font-medium text-cream">{opt.label}</div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  if (field.type === 'pill_select') {
+    return (
+      <div className="mb-6">
+        {field.label && <div className="mb-2 text-xs uppercase tracking-widest text-cream/40">{field.label}</div>}
+        <div className="flex flex-wrap gap-2">
+          {field.options.map(opt => (
+            <div key={opt.value}
+              onClick={() => onChange(opt.value)}
+              className={`cursor-pointer rounded-full px-4 py-2 text-sm transition-all ${value === opt.value ? 'border border-gold bg-gold/15 font-medium text-gold' : 'border border-gold/20 bg-gold/[0.04] text-cream/70 hover:border-gold/50'}`}
+            >{opt.label}</div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (field.type === 'multi_select') {
+    const selected = value || []
+    const toggle = (v) => {
+      if (selected.includes(v)) {
+        onChange(selected.filter(x => x !== v))
+      } else if (!field.maxSelect || selected.length < field.maxSelect) {
+        onChange([...selected, v])
+      }
+    }
+    return (
+      <div className="mb-6">
+        {field.label && <div className="mb-2 text-xs uppercase tracking-widest text-cream/40">{field.label}</div>}
+        {field.maxSelect && (
+          <div className="mb-2 text-[0.7rem] text-gold/50">
+            {selected.length} / {field.maxSelect} selected
+          </div>
+        )}
+        <div className="flex flex-wrap gap-2">
+          {field.options.map(opt => {
+            const isSelected = selected.includes(opt.value)
+            const atMax = field.maxSelect && selected.length >= field.maxSelect && !isSelected
+            return (
+              <div key={opt.value}
+                onClick={() => !atMax && toggle(opt.value)}
+                className={`rounded-full px-4 py-2 text-sm transition-all ${isSelected ? 'border border-gold bg-gold/15 font-medium text-gold' : atMax ? 'cursor-not-allowed border border-gold/20 bg-gold/[0.04] text-cream/25 opacity-40' : 'cursor-pointer border border-gold/20 bg-gold/[0.04] text-cream/70'}`}
+              >{opt.label}</div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  if (field.type === 'segmented_control') {
+    return (
+      <div className="mb-6">
+        {field.label && <div className="mb-2 text-xs uppercase tracking-widest text-cream/40">{field.label}</div>}
+        <div className="flex overflow-hidden rounded-lg border border-gold/15 bg-gold/[0.06]">
+          {field.options.map(opt => (
+            <div key={opt.value}
+              onClick={() => onChange(opt.value)}
+              className={`flex-1 cursor-pointer py-3 text-center text-sm font-medium tracking-wide transition-all ${value === opt.value ? 'bg-gold/[0.18] text-gold' : 'text-cream/50 hover:bg-gold/[0.06] hover:text-cream'}`}
+            >{opt.label}</div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  return null
+}
+
+function ReviewScreen({ formData, config, onEdit }) {
+  const getLabelForValue = (field, val) => {
+    if (!field.options) return val
+    const opt = field.options.find(o => o.value === val)
+    return opt ? opt.label : val
+  }
+
+  return (
+    <div>
+      {config.slice(0, -1).map((stepCfg, idx) => {
+        const hasData = stepCfg.fields.some(f => {
+          const v = formData[f.id]
+          return v !== undefined && v !== '' && (!Array.isArray(v) || v.length > 0)
+        })
+        if (!hasData && stepCfg.id === 'personal') return null
+        return (
+          <div key={stepCfg.id} className="mb-4 rounded-xl border border-gold/10 bg-gold/[0.04] p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="text-[0.7rem] uppercase tracking-widest text-gold/60">
+                {stepCfg.questionText.replace(/[?.]/g, '').substring(0, 30)}
+              </span>
+              <button onClick={() => onEdit(idx)} className="border-none bg-transparent text-xs text-gold underline underline-offset-2">Edit</button>
+            </div>
+            {stepCfg.fields.map(f => {
+              const val = formData[f.id]
+              if (val === undefined || val === '' || (Array.isArray(val) && val.length === 0)) return null
+              return (
+                <div key={f.id} className="mb-1 text-sm text-cream">
+                  {Array.isArray(val)
+                    ? val.map(v => getLabelForValue(f, v)).join(', ')
+                    : f.options ? getLabelForValue(f, val) : val
+                  }
+                </div>
+              )
+            })}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function IntakeEngine({ onClose }) {
+  const [step, setStep] = useState(0)
+  const [formData, setFormData] = useState({ energy: 'medium' })
+  const [direction, setDirection] = useState('forward')
+  const [submitted, setSubmitted] = useState(false)
+  const totalSteps = FORM_CONFIG.length
+  const config = FORM_CONFIG[step]
+
+  const goNext = () => { if (step < totalSteps - 1) { setDirection('forward'); setStep(s => s + 1) } }
+  const goBack = () => { if (step > 0) { setDirection('back'); setStep(s => s - 1) } }
+  const goToStep = (n) => { setDirection(n > step ? 'forward' : 'back'); setStep(n) }
+  const setValue = (fieldId, value) => { setFormData(d => ({ ...d, [fieldId]: value })) }
+
+  const canProceed = !config || config.fields.every(f => {
+    if (!f.required) return true
+    const val = formData[f.id]
+    if (Array.isArray(val)) return val.length > 0
+    return val !== undefined && val !== ''
+  })
+
+  const handleSubmit = () => { console.log('LIFESONG INTAKE SUBMIT:', formData); setSubmitted(true) }
+
+  return (
+    <div className="fixed inset-0 z-[100] flex flex-col bg-navy">
+      {/* Top bar */}
+      <div className="border-b border-gold/[0.12] bg-navy/95 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[40rem] items-center justify-between px-6 py-3">
+          <button onClick={onClose} className="border-none bg-transparent text-lg text-cream/50 cursor-pointer">✕</button>
+          <span className="font-serif text-lg tracking-wide text-gold">LifeSong</span>
+          <span className="flex items-center gap-1.5 text-[0.65rem] uppercase tracking-widest text-gold/75">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" />
+            24-Hour Delivery
+          </span>
+        </div>
+        <div className="h-0.5 bg-gold/[0.12]">
+          <div className="h-0.5 transition-all duration-500" style={{ background: 'linear-gradient(90deg,#D4AF37,#F0D060)', width: `${((step + 1) / totalSteps) * 100}%` }} />
+        </div>
+      </div>
+
+      {submitted ? (
+        <div className="flex flex-1 items-center justify-center p-8 text-center">
+          <div>
+            <div className="mb-4 text-5xl">🎶</div>
+            <h2 className="mb-3 font-serif text-[clamp(1.5rem,4vw,2.25rem)] font-normal text-cream">We're on it!</h2>
+            <p className="mx-auto mb-8 max-w-sm text-base leading-relaxed text-cream/55">
+              Your custom song is being crafted by one of our talented artists. We'll have it in your inbox within 24 hours.
+            </p>
+            <button onClick={onClose} className="btn-gold px-8 py-4 text-base">Back to LifeSong</button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="flex flex-1 items-center justify-center overflow-auto">
+            <div key={step} className="w-full max-w-[36rem] px-6 py-8" style={{ animation: `slideIn${direction === 'forward' ? 'Left' : 'Right'} 0.3s ease-out` }}>
+              <div className="mb-3 text-[0.65rem] uppercase tracking-[0.2em] text-gold/60">Step {step + 1} of {totalSteps}</div>
+              <h2 className="mb-2 font-serif text-[clamp(1.5rem,4vw,2rem)] font-normal leading-tight text-cream">{config.questionText}</h2>
+              <p className="mb-8 text-sm leading-relaxed text-cream/45">{config.subtext}</p>
+
+              {config.id === 'review' ? (
+                <ReviewScreen formData={formData} config={FORM_CONFIG} onEdit={goToStep} />
+              ) : (
+                config.fields.map(field => (
+                  <FormField key={field.id} field={field} value={formData[field.id]} onChange={v => setValue(field.id, v)} onAutoAdvance={config.fields.length === 1 ? goNext : null} />
+                ))
+              )}
+            </div>
+          </div>
+
+          <div className="border-t border-gold/[0.08] bg-navy/95 px-6 py-4 backdrop-blur-xl">
+            <div className="mx-auto flex max-w-[36rem] items-center justify-between">
+              {step > 0 ? (
+                <button onClick={goBack} className="border-none bg-transparent text-sm tracking-wide text-cream/40 cursor-pointer hover:text-cream">← Back</button>
+              ) : <span />}
+
+              {config.id === 'personal' ? (
+                <button onClick={goNext} className="btn-gold rounded-full px-8 py-3 text-sm font-semibold">
+                  {canProceed ? 'Continue →' : 'Skip →'}
+                </button>
+              ) : (
+                <button
+                  onClick={config.id === 'review' ? handleSubmit : goNext}
+                  disabled={!canProceed && config.id !== 'review'}
+                  className="rounded-full px-8 py-3 text-sm font-semibold tracking-wide transition-all"
+                  style={{
+                    background: canProceed || config.id === 'review' ? 'linear-gradient(135deg,#D4AF37,#B8962E)' : 'rgba(212,175,55,0.15)',
+                    color: canProceed || config.id === 'review' ? '#0F172A' : 'rgba(253,251,247,0.25)',
+                    cursor: canProceed || config.id === 'review' ? 'pointer' : 'not-allowed',
+                    border: 'none',
+                  }}
+                >{config.id === 'review' ? 'Submit My Song →' : 'Continue →'}</button>
+              )}
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 /* ─── App ────────────────────────────────────────── */
 export default function App() {
+  const [showIntake, setShowIntake] = useState(false)
+
+  useEffect(() => {
+    if (window.location.hash === '#start') setShowIntake(true)
+    const onHash = () => { if (window.location.hash === '#start') setShowIntake(true) }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  const openIntake = () => setShowIntake(true)
+  const closeIntake = () => { setShowIntake(false); window.location.hash = '' }
+
   return (
     <div className="min-h-screen bg-navy">
-      <Nav />
-      <Hero />
-      <HowItWorks />
+      <Nav onStart={openIntake} />
+      <Hero onStart={openIntake} />
+      <HowItWorks onStart={openIntake} />
       <Inspiration />
       <Artists />
       <FAQ />
-      <FinalCTA />
+      <FinalCTA onStart={openIntake} />
       <Footer />
-      <SpinPopup />
+      {!showIntake && <SpinPopup />}
+      {showIntake && <IntakeEngine onClose={closeIntake} />}
     </div>
   )
 }

@@ -62,6 +62,14 @@
       0%   { background-position: -200% center; }
       100% { background-position: 200% center; }
     }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(-40px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -259,7 +267,7 @@
     /* ── Data ── */
     const TICKER_WORDS = [
       'BIRTHDAY', 'ANNIVERSARY', "I'M SORRY",
-      "MOTHER'S DAY", 'CONGRATULATIONS', 'BABY', 'GRADUATION',
+      "MOTHER'S DAY", 'CONGRATULATIONS', 'NEW BABY', 'GRADUATION',
     ];
     const NAV_LINKS = [
       { href: '#how-it-works', label: 'How It Works' },
@@ -319,6 +327,106 @@
       { q:'Are these AI-generated songs?', a:'No. Every LifeSong has a real human artist helping craft your song. They use tools and instruments they\u2019re most comfortable with, including AI to polish the result, but their human ingenuity and creativity is what will make your song great.' },
     ];
 
+    /* ── Intake Engine Config ── */
+    const FORM_CONFIG = [
+      {
+        id: 'recipient',
+        questionText: "First things first, who is the lucky person?",
+        subtext: "Just a first name is perfect.",
+        fields: [
+          { id: 'recipientName', type: 'text_input', placeholder: 'e.g. Sarah', required: true }
+        ]
+      },
+      {
+        id: 'occasion',
+        questionText: "What are we celebrating?",
+        subtext: "Pick the occasion that fits best.",
+        fields: [
+          { id: 'occasion', type: 'card_select', required: true, options: [
+            { value: 'birthday', label: 'Birthday', emoji: '🎂' },
+            { value: 'mothers-day', label: "Mother's Day", emoji: '💐' },
+            { value: 'valentines', label: "Valentine's Day", emoji: '❤️' },
+            { value: 'anniversary', label: 'Anniversary', emoji: '💍' },
+            { value: 'celebration-of-life', label: 'Celebration of Life', emoji: '🌟' },
+            { value: 'general', label: 'General story / no occasion', emoji: '📖', fullWidth: true },
+          ]}
+        ]
+      },
+      {
+        id: 'vibe',
+        questionText: "Set the vibe.",
+        subtext: "How should the song feel? Pick the closest match.",
+        fields: [
+          { id: 'tone', type: 'pill_select', required: true, options: [
+            { value: 'emotional', label: 'Emotional / Heartfelt' },
+            { value: 'happy', label: 'Happy / Upbeat' },
+            { value: 'calm', label: 'Calm / Reflective' },
+            { value: 'romantic', label: 'Romantic' },
+            { value: 'fun', label: 'Fun / Playful' },
+          ]},
+          { id: 'energy', type: 'segmented_control', label: 'Energy level', required: true, options: [
+            { value: 'soft', label: '☁️ Soft' },
+            { value: 'medium', label: '🎵 Medium' },
+            { value: 'high', label: '⚡ High' },
+          ]}
+        ]
+      },
+      {
+        id: 'emotion',
+        questionText: "How should the listener feel by the end?",
+        subtext: "Pick all that resonate.",
+        fields: [
+          { id: 'feelings', type: 'multi_select', required: true, options: [
+            { value: 'loved', label: 'Loved' },
+            { value: 'appreciated', label: 'Appreciated' },
+            { value: 'proud', label: 'Proud' },
+            { value: 'emotional', label: 'Emotional / Teary' },
+            { value: 'inspired', label: 'Inspired' },
+            { value: 'humorous', label: 'Humorous' },
+          ]},
+          { id: 'relationship', type: 'pill_select', label: 'What is your relationship to them?', required: true, options: [
+            { value: 'partner', label: 'Partner' },
+            { value: 'parent', label: 'Parent' },
+            { value: 'child', label: 'Child' },
+            { value: 'friend', label: 'Friend' },
+            { value: 'self', label: 'Self' },
+          ]}
+        ]
+      },
+      {
+        id: 'themes',
+        questionText: "Pick up to 3 themes to weave into the lyrics.",
+        subtext: "These guide the songwriter's direction.",
+        fields: [
+          { id: 'themes', type: 'multi_select', required: true, maxSelect: 3, options: [
+            { value: 'gratitude', label: 'Gratitude' },
+            { value: 'support', label: 'Support' },
+            { value: 'shared-memories', label: 'Shared Memories' },
+            { value: 'growth', label: 'Growth' },
+            { value: 'future-hopes', label: 'Future Hopes' },
+            { value: 'celebration', label: 'Celebration' },
+            { value: 'resilience', label: 'Resilience' },
+          ]}
+        ]
+      },
+      {
+        id: 'personal',
+        questionText: "Make it personal.",
+        subtext: "All optional — but the more you share, the better the song.",
+        fields: [
+          { id: 'chorusHook', type: 'text_input', label: "The 'Chorus' Hook", placeholder: 'e.g. The Best Mom in Brooklyn', required: false },
+          { id: 'goldenMemory', type: 'textarea', label: "A 'Golden Memory' or inside joke", placeholder: 'A specific moment, inside joke, or detail that makes them smile...', maxLength: 300, required: false },
+          { id: 'avoid', type: 'text_input', label: 'Anything we should steer clear of?', placeholder: 'Sensitive topics or names to avoid', required: false },
+        ]
+      },
+      {
+        id: 'review',
+        questionText: "Here's what we've got.",
+        subtext: "Review your answers before we send this to our songwriters.",
+        fields: []
+      },
+    ];
+
     /* ── Ticker — spring slide with motion blur ── */
     const TICKER_DURATIONS = { 0: 2000 }; /* index 0 = BIRTHDAY stays 2s, rest 3s */
     function Ticker() {
@@ -331,7 +439,7 @@
         if (!measRef.current) return;
         let max = 0;
         measRef.current.querySelectorAll('[data-measure]').forEach(s => { if (s.offsetWidth > max) max = s.offsetWidth });
-        setWidth(max + 12);
+        setWidth(max + 20);
       }, []);
 
       /* Variable-duration timer so BIRTHDAY gets exactly 2s */
@@ -360,8 +468,8 @@
             style={{
               position:'relative', display:'inline-block',
               overflow:'visible', verticalAlign:'baseline',
-              height:'1.2em', width: width || 'auto', maxWidth:'85vw',
-              clipPath:'inset(-5% -8% -5% -8%)',
+              height:'1.2em', width: width || 'auto', maxWidth:'92vw',
+              clipPath:'inset(-5% -12% -5% -12%)',
             }}
           >
             {TICKER_WORDS.map((word,i) => {
@@ -392,7 +500,7 @@
     }
 
     /* ── Nav ── */
-    function Nav() {
+    function Nav({ onStart }) {
       const [scrolled, setScrolled] = useState(false);
       const [open, setOpen] = useState(false);
       useEffect(() => {
@@ -422,7 +530,7 @@
               ))}
             </nav>
             <span className="hidden md:block">
-              <a href="#" className="btn-gold" style={{ padding:'0.625rem 1.25rem', fontSize:'0.875rem' }}>
+              <a href="#" onClick={e=>{e.preventDefault();onStart&&onStart();}} className="btn-gold" style={{ padding:'0.625rem 1.25rem', fontSize:'0.875rem' }}>
               Start My Song
               </a>
             </span>
@@ -448,7 +556,7 @@
                   {l.label}
                 </a>
               ))}
-              <a href="#" className="btn-gold" style={{ marginTop:'1rem', textAlign:'center' }}>Start My Song</a>
+              <a href="#" onClick={e=>{e.preventDefault();setOpen(false);onStart&&onStart();}} className="btn-gold" style={{ marginTop:'1rem', textAlign:'center' }}>Start My Song</a>
             </div>
           </div>
         </header>
@@ -456,15 +564,15 @@
     }
 
     const HERO_VIDEOS = [
-      '14092529_3840_2160_30fps.mp4',
-      '3704443-uhd_4096_2160_25fps.mp4',
-      '3704252-uhd_4096_2160_25fps.mp4',
-      '4873447-hd_1920_1080_25fps.mp4',
-      '5617146-uhd_3840_2160_25fps.mp4',
+      'https://danielcotlar-ops.github.io/lifesong-assets/14092529_3840_2160_30fps.mp4',
+      'https://danielcotlar-ops.github.io/lifesong-assets/3704443-uhd_4096_2160_25fps.mp4',
+      'https://danielcotlar-ops.github.io/lifesong-assets/3704252-uhd_4096_2160_25fps.mp4',
+      'https://danielcotlar-ops.github.io/lifesong-assets/4873447-hd_1920_1080_25fps.mp4',
+      'https://danielcotlar-ops.github.io/lifesong-assets/5617146-uhd_3840_2160_25fps.mp4',
     ];
 
     /* ── Hero ── */
-    function Hero() {
+    function Hero({ onStart }) {
       const [active, setActive] = useState(0);
       const videoRefs = useRef([]);
 
@@ -509,9 +617,9 @@
           {/* Content */}
           <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', textAlign:'center' }}>
             {/* Badge */}
-            <div className="anim-1" style={{ display:'inline-flex', alignItems:'center', gap:'0.625rem', marginBottom:'2rem', padding:'0.375rem 1rem', borderRadius:'9999px', border:'1px solid rgba(212,175,55,0.35)', background:'rgba(212,175,55,0.08)', backdropFilter:'blur(4px)' }}>
+            <div className="anim-1" style={{ display:'inline-flex', alignItems:'center', gap:'0.625rem', marginBottom:'2rem', padding:'0.375rem 1rem', borderRadius:'9999px', border:'1px solid rgba(212,175,55,0.35)', background:'rgba(212,175,55,0.08)', backdropFilter:'blur(4px)', maxWidth:'90vw' }}>
               <span style={{ width:'0.375rem', height:'0.375rem', borderRadius:'50%', background:'#D4AF37', animation:'pulseGold 2s ease-in-out infinite', flexShrink:0 }} />
-              <span style={{ fontSize:'0.7rem', fontWeight:400, letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(212,175,55,0.9)' }}>
+              <span style={{ fontSize:'clamp(0.58rem,1.8vw,0.7rem)', fontWeight:400, letterSpacing:'clamp(0.1em,0.5vw,0.22em)', textTransform:'uppercase', color:'rgba(212,175,55,0.9)' }}>
                 Studio Quality · 24-Hour Delivery
               </span>
             </div>
@@ -525,7 +633,7 @@
 
             {/* CTAs */}
             <div className="anim-3" style={{ marginTop:'2.5rem', display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
-              <button className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
               <button className="btn-ghost" style={{ padding:'0.875rem 2rem', fontSize:'1rem' }}>🎧&nbsp; Listen to Examples</button>
             </div>
 
@@ -546,11 +654,11 @@
 
     /* ── Occasion Pills ── */
     const OCCASIONS = ['Birthday', 'Anniversary', 'Apology', 'Engagement', 'Memorial', 'Graduation', 'Just Because'];
-    function OccasionPills() {
+    function OccasionPills({ onStart }) {
       return (
         <div style={{ display:'flex', flexWrap:'wrap', gap:'0.4rem', justifyContent:'center', marginTop:'0.75rem' }}>
           {OCCASIONS.map(o => (
-            <a key={o} href="#" style={{
+            <a key={o} href="#" onClick={e=>{e.preventDefault();onStart&&onStart();}} style={{
               padding:'0.35rem 0.75rem', borderRadius:'9999px',
               border:'1px solid rgba(212,175,55,0.3)', background:'rgba(212,175,55,0.06)',
               fontSize:'0.68rem', fontWeight:400, letterSpacing:'0.04em',
@@ -596,7 +704,7 @@
     }
 
     /* ── How It Works ── */
-    function HowItWorks() {
+    function HowItWorks({ onStart }) {
       return (
         <section id="how-it-works" style={{ padding:'7rem 1.5rem' }}>
           <div style={{ maxWidth:'76rem', margin:'0 auto' }}>
@@ -623,13 +731,13 @@
                   </div>
                   <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.25rem', fontWeight:600, color:'#FDFBF7', margin:'0 0 0.75rem' }}>{s.title}</h3>
                   <p style={{ fontSize:'0.85rem', fontWeight:300, lineHeight:1.7, color:'rgba(253,251,247,0.5)', maxWidth:'16rem', margin:'0 auto' }}>{s.body}</p>
-                  {s.hasOccasionPills && <OccasionPills />}
+                  {s.hasOccasionPills && <OccasionPills onStart={onStart} />}
                   {s.hasGenreScroller && <GenreScroller />}
                 </div>
               ))}
             </div>
             <div style={{ marginTop:'4rem', display:'flex', justifyContent:'center' }}>
-              <a href="#" className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'0.9375rem' }}>Start My Song →</a>
+              <a href="#" onClick={e=>{e.preventDefault();onStart&&onStart();}} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'0.9375rem' }}>Start My Song →</a>
             </div>
           </div>
         </section>
@@ -809,7 +917,7 @@
     }
 
     /* ── Final CTA ── */
-    function FinalCTA() {
+    function FinalCTA({ onStart }) {
       return (
         <section style={{ padding:'0 1.5rem 7rem' }}>
           <div style={{ maxWidth:'56rem', margin:'0 auto' }}>
@@ -827,7 +935,7 @@
                 Join 5,000+ people who gave the one gift that can never be forgotten, returned, or replaced.
               </p>
               <div style={{ display:'flex', flexWrap:'wrap', alignItems:'center', justifyContent:'center', gap:'1rem' }}>
-                <button className="btn-gold" style={{ padding:'1rem 2.5rem', fontSize:'1rem' }}>Start My Song →</button>
+                <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2.5rem', fontSize:'1rem' }}>Start My Song →</button>
                 <p style={{ fontSize:'0.75rem', fontWeight:300, color:'rgba(253,251,247,0.3)', margin:0 }}>24-hour delivery · Unlimited revisions</p>
               </div>
               {/* Decorative staff */}
@@ -1072,19 +1180,409 @@
       );
     }
 
+    /* ── Intake Engine ── */
+    function FormField({ field, value, onChange, onAutoAdvance }) {
+      if (field.type === 'text_input') {
+        const hasLabel = !!field.label;
+        const boxStyle = hasLabel ? {
+          width:'100%', background:'rgba(212,175,55,0.04)', border:'1px solid rgba(212,175,55,0.2)',
+          borderRadius:'0.75rem', padding:'1rem', fontSize:'0.9rem', fontFamily:'Inter,sans-serif',
+          color:'#FDFBF7', outline:'none', transition:'border-color 0.3s',
+        } : {
+          width:'100%', background:'transparent', border:'none',
+          borderBottom:'2px solid rgba(212,175,55,0.25)', padding:'1rem 0',
+          fontSize:'1.25rem', fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic',
+          color:'#FDFBF7', outline:'none', transition:'border-color 0.3s',
+        };
+        const defaultBorder = hasLabel ? 'rgba(212,175,55,0.2)' : 'rgba(212,175,55,0.25)';
+        return (
+          <div style={{ marginBottom:'1.5rem' }}>
+            {field.label && <div style={{ fontSize:'0.75rem', letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(253,251,247,0.4)', marginBottom:'0.6rem' }}>{field.label}</div>}
+            <input
+              type="text"
+              value={value || ''}
+              onChange={e => onChange(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter' && value && onAutoAdvance) onAutoAdvance(); }}
+              placeholder={field.placeholder}
+              style={boxStyle}
+              onFocus={e => e.target.style.borderColor='#D4AF37'}
+              onBlur={e => e.target.style.borderColor=defaultBorder}
+            />
+          </div>
+        );
+      }
+
+      if (field.type === 'textarea') {
+        const len = (value || '').length;
+        return (
+          <div style={{ marginBottom:'1.5rem' }}>
+            {field.label && <div style={{ fontSize:'0.75rem', letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(253,251,247,0.4)', marginBottom:'0.6rem' }}>{field.label}</div>}
+            <textarea
+              value={value || ''}
+              onChange={e => { if (!field.maxLength || e.target.value.length <= field.maxLength) onChange(e.target.value); }}
+              placeholder={field.placeholder}
+              rows={4}
+              style={{
+                width:'100%', background:'rgba(212,175,55,0.04)', border:'1px solid rgba(212,175,55,0.2)',
+                borderRadius:'0.75rem', padding:'1rem', fontSize:'0.9rem', fontFamily:'Inter,sans-serif',
+                color:'#FDFBF7', outline:'none', resize:'vertical', transition:'border-color 0.3s',
+              }}
+              onFocus={e => e.target.style.borderColor='#D4AF37'}
+              onBlur={e => e.target.style.borderColor='rgba(212,175,55,0.2)'}
+            />
+            {field.maxLength && (
+              <div style={{ textAlign:'right', fontSize:'0.7rem', color: len > field.maxLength * 0.9 ? '#D4AF37' : 'rgba(253,251,247,0.25)', marginTop:'0.35rem' }}>
+                {len}/{field.maxLength}
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      if (field.type === 'card_select') {
+        return (
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:'0.75rem' }}>
+            {field.options.map(opt => (
+              <div key={opt.value}
+                onClick={() => { onChange(opt.value); if (onAutoAdvance) setTimeout(onAutoAdvance, 350); }}
+                style={{
+                  background: value === opt.value ? 'rgba(212,175,55,0.12)' : 'rgba(212,175,55,0.04)',
+                  border: `1px solid ${value === opt.value ? '#D4AF37' : 'rgba(212,175,55,0.15)'}`,
+                  borderRadius:'0.75rem', padding:'1.25rem', cursor:'pointer',
+                  textAlign:'center', transition:'all 0.25s',
+                  gridColumn: opt.fullWidth ? '1 / -1' : 'auto',
+                  boxShadow: value === opt.value ? '0 0 20px rgba(212,175,55,0.1)' : 'none',
+                }}
+                onMouseOver={e => { if(value !== opt.value) { e.currentTarget.style.borderColor='rgba(212,175,55,0.4)'; e.currentTarget.style.transform='translateY(-2px)'; }}}
+                onMouseOut={e => { if(value !== opt.value) { e.currentTarget.style.borderColor='rgba(212,175,55,0.15)'; e.currentTarget.style.transform='none'; }}}
+              >
+                <div style={{ fontSize:'1.75rem', marginBottom:'0.5rem' }}>{opt.emoji}</div>
+                <div style={{ fontSize:'0.85rem', fontWeight:500, letterSpacing:'0.02em', color:'#FDFBF7' }}>{opt.label}</div>
+              </div>
+            ))}
+          </div>
+        );
+      }
+
+      if (field.type === 'pill_select') {
+        return (
+          <div style={{ marginBottom:'1.5rem' }}>
+            {field.label && <div style={{ fontSize:'0.75rem', letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(253,251,247,0.4)', marginBottom:'0.6rem' }}>{field.label}</div>}
+            <div style={{ display:'flex', flexWrap:'wrap', gap:'0.5rem' }}>
+              {field.options.map(opt => (
+                <div key={opt.value}
+                  onClick={() => onChange(opt.value)}
+                  style={{
+                    padding:'0.5rem 1.1rem', borderRadius:'9999px', cursor:'pointer',
+                    border: `1px solid ${value === opt.value ? '#D4AF37' : 'rgba(212,175,55,0.2)'}`,
+                    background: value === opt.value ? 'rgba(212,175,55,0.15)' : 'rgba(212,175,55,0.04)',
+                    color: value === opt.value ? '#D4AF37' : 'rgba(253,251,247,0.7)',
+                    fontSize:'0.8rem', fontWeight: value === opt.value ? 500 : 400,
+                    letterSpacing:'0.02em', transition:'all 0.2s',
+                  }}
+                  onMouseOver={e => { if(value !== opt.value) e.currentTarget.style.borderColor='rgba(212,175,55,0.5)'; }}
+                  onMouseOut={e => { if(value !== opt.value) e.currentTarget.style.borderColor='rgba(212,175,55,0.2)'; }}
+                >{opt.label}</div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      if (field.type === 'multi_select') {
+        const selected = value || [];
+        const toggle = (v) => {
+          if (selected.includes(v)) {
+            onChange(selected.filter(x => x !== v));
+          } else if (!field.maxSelect || selected.length < field.maxSelect) {
+            onChange([...selected, v]);
+          }
+        };
+        return (
+          <div style={{ marginBottom:'1.5rem' }}>
+            {field.label && <div style={{ fontSize:'0.75rem', letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(253,251,247,0.4)', marginBottom:'0.6rem' }}>{field.label}</div>}
+            {field.maxSelect && (
+              <div style={{ fontSize:'0.7rem', color:'rgba(212,175,55,0.5)', marginBottom:'0.5rem' }}>
+                {selected.length} / {field.maxSelect} selected
+              </div>
+            )}
+            <div style={{ display:'flex', flexWrap:'wrap', gap:'0.5rem' }}>
+              {field.options.map(opt => {
+                const isSelected = selected.includes(opt.value);
+                const atMax = field.maxSelect && selected.length >= field.maxSelect && !isSelected;
+                return (
+                  <div key={opt.value}
+                    onClick={() => !atMax && toggle(opt.value)}
+                    style={{
+                      padding:'0.5rem 1.1rem', borderRadius:'9999px',
+                      cursor: atMax ? 'not-allowed' : 'pointer',
+                      border: `1px solid ${isSelected ? '#D4AF37' : 'rgba(212,175,55,0.2)'}`,
+                      background: isSelected ? 'rgba(212,175,55,0.15)' : 'rgba(212,175,55,0.04)',
+                      color: isSelected ? '#D4AF37' : atMax ? 'rgba(253,251,247,0.25)' : 'rgba(253,251,247,0.7)',
+                      fontSize:'0.8rem', fontWeight: isSelected ? 500 : 400,
+                      opacity: atMax ? 0.4 : 1, letterSpacing:'0.02em', transition:'all 0.2s',
+                    }}
+                  >{opt.label}</div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      }
+
+      if (field.type === 'segmented_control') {
+        return (
+          <div style={{ marginBottom:'1.5rem' }}>
+            {field.label && <div style={{ fontSize:'0.75rem', letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(253,251,247,0.4)', marginBottom:'0.6rem' }}>{field.label}</div>}
+            <div style={{ display:'flex', background:'rgba(212,175,55,0.06)', border:'1px solid rgba(212,175,55,0.15)', borderRadius:'0.5rem', overflow:'hidden' }}>
+              {field.options.map(opt => (
+                <div key={opt.value}
+                  onClick={() => onChange(opt.value)}
+                  style={{
+                    flex:1, padding:'0.75rem', textAlign:'center', fontSize:'0.8rem', fontWeight:500,
+                    color: value === opt.value ? '#D4AF37' : 'rgba(253,251,247,0.5)',
+                    background: value === opt.value ? 'rgba(212,175,55,0.18)' : 'transparent',
+                    cursor:'pointer', transition:'all 0.25s', letterSpacing:'0.04em',
+                  }}
+                  onMouseOver={e => { if(value !== opt.value) { e.currentTarget.style.color='#FDFBF7'; e.currentTarget.style.background='rgba(212,175,55,0.06)'; }}}
+                  onMouseOut={e => { if(value !== opt.value) { e.currentTarget.style.color='rgba(253,251,247,0.5)'; e.currentTarget.style.background='transparent'; }}}
+                >{opt.label}</div>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      return null;
+    }
+
+    function ReviewScreen({ formData, config, onEdit }) {
+      const getLabelForValue = (field, val) => {
+        if (!field.options) return val;
+        const opt = field.options.find(o => o.value === val);
+        return opt ? opt.label : val;
+      };
+
+      return (
+        <div>
+          {config.slice(0, -1).map((stepCfg, idx) => {
+            const hasData = stepCfg.fields.some(f => {
+              const v = formData[f.id];
+              return v !== undefined && v !== '' && (!Array.isArray(v) || v.length > 0);
+            });
+            if (!hasData && stepCfg.id === 'personal') return null;
+            return (
+              <div key={stepCfg.id} style={{
+                marginBottom:'1rem', padding:'1rem', borderRadius:'0.75rem',
+                background:'rgba(212,175,55,0.04)', border:'1px solid rgba(212,175,55,0.1)',
+              }}>
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'0.5rem' }}>
+                  <span style={{ fontSize:'0.7rem', letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(212,175,55,0.6)' }}>
+                    {stepCfg.questionText.replace(/[?.]/g, '').substring(0, 30)}
+                  </span>
+                  <button onClick={() => onEdit(idx)} style={{
+                    background:'none', border:'none', color:'#D4AF37', fontSize:'0.75rem', cursor:'pointer',
+                    textDecoration:'underline', textUnderlineOffset:'2px',
+                  }}>Edit</button>
+                </div>
+                {stepCfg.fields.map(f => {
+                  const val = formData[f.id];
+                  if (val === undefined || val === '' || (Array.isArray(val) && val.length === 0)) return null;
+                  return (
+                    <div key={f.id} style={{ fontSize:'0.9rem', color:'#FDFBF7', marginBottom:'0.25rem' }}>
+                      {Array.isArray(val)
+                        ? val.map(v => getLabelForValue(f, v)).join(', ')
+                        : f.options ? getLabelForValue(f, val) : val
+                      }
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+    function IntakeEngine({ onClose }) {
+      const [step, setStep] = useState(0);
+      const [formData, setFormData] = useState({ energy: 'medium' });
+      const [direction, setDirection] = useState('forward');
+      const [submitted, setSubmitted] = useState(false);
+      const totalSteps = FORM_CONFIG.length;
+      const config = FORM_CONFIG[step];
+
+      const goNext = () => {
+        if (step < totalSteps - 1) {
+          setDirection('forward');
+          setStep(s => s + 1);
+        }
+      };
+      const goBack = () => {
+        if (step > 0) {
+          setDirection('back');
+          setStep(s => s - 1);
+        }
+      };
+      const goToStep = (n) => {
+        setDirection(n > step ? 'forward' : 'back');
+        setStep(n);
+      };
+
+      const setValue = (fieldId, value) => {
+        setFormData(d => ({ ...d, [fieldId]: value }));
+      };
+
+      const canProceed = !config || config.fields.every(f => {
+        if (!f.required) return true;
+        const val = formData[f.id];
+        if (Array.isArray(val)) return val.length > 0;
+        return val !== undefined && val !== '';
+      });
+
+      const handleSubmit = () => {
+        console.log('LIFESONG INTAKE SUBMIT:', formData);
+        setSubmitted(true);
+      };
+
+      return (
+        <div style={{
+          position:'fixed', inset:0, zIndex:100, background:'#0F172A',
+          display:'flex', flexDirection:'column',
+        }}>
+          {/* Top bar */}
+          <div style={{
+            background:'rgba(15,23,42,0.95)', backdropFilter:'blur(12px)',
+            borderBottom:'1px solid rgba(212,175,55,0.12)',
+          }}>
+            <div style={{ maxWidth:'40rem', margin:'0 auto', padding:'0.75rem 1.5rem', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+              <button onClick={onClose} style={{ background:'none', border:'none', color:'rgba(253,251,247,0.5)', cursor:'pointer', fontSize:'1.1rem', padding:'0.25rem' }}>✕</button>
+              <span style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.1rem', color:'#D4AF37', letterSpacing:'0.05em' }}>LifeSong</span>
+              <span style={{ fontSize:'0.65rem', letterSpacing:'0.12em', textTransform:'uppercase', color:'rgba(212,175,55,0.75)', display:'flex', alignItems:'center', gap:'0.4rem' }}>
+                <span style={{ width:'6px', height:'6px', borderRadius:'50%', background:'#D4AF37', animation:'pulseGold 2s ease-in-out infinite' }} />
+                24-Hour Delivery
+              </span>
+            </div>
+            {/* Progress bar */}
+            <div style={{ height:'2px', background:'rgba(212,175,55,0.12)' }}>
+              <div style={{ height:'2px', background:'linear-gradient(90deg,#D4AF37,#F0D060)', width:`${((step + 1) / totalSteps) * 100}%`, transition:'width 0.5s ease' }} />
+            </div>
+          </div>
+
+          {submitted ? (
+            /* Thank you screen */
+            <div style={{ flex:1, display:'flex', alignItems:'center', justifyContent:'center', textAlign:'center', padding:'2rem' }}>
+              <div>
+                <div style={{ fontSize:'3rem', marginBottom:'1rem' }}>🎶</div>
+                <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(1.5rem,4vw,2.25rem)', fontWeight:400, color:'#FDFBF7', marginBottom:'0.75rem' }}>
+                  We're on it!
+                </h2>
+                <p style={{ fontSize:'0.95rem', color:'rgba(253,251,247,0.55)', lineHeight:1.6, maxWidth:'24rem', margin:'0 auto 2rem' }}>
+                  Your custom song is being crafted by one of our talented artists. We'll have it in your inbox within 24 hours.
+                </p>
+                <button onClick={onClose} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'1rem' }}>
+                  Back to LifeSong
+                </button>
+              </div>
+            </div>
+          ) : (
+            <React.Fragment>
+              {/* Content */}
+              <div style={{ flex:1, overflow:'auto', display:'flex', alignItems:'center', justifyContent:'center' }}>
+                <div key={step} style={{
+                  maxWidth:'36rem', width:'100%', padding:'2rem 1.5rem',
+                  animation: `slideIn${direction === 'forward' ? 'Left' : 'Right'} 0.3s ease-out`,
+                }}>
+                  <div style={{ fontSize:'0.65rem', letterSpacing:'0.2em', textTransform:'uppercase', color:'rgba(212,175,55,0.6)', marginBottom:'0.75rem' }}>
+                    Step {step + 1} of {totalSteps}
+                  </div>
+                  <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(1.5rem,4vw,2rem)', fontWeight:400, lineHeight:1.3, color:'#FDFBF7', margin:'0 0 0.5rem' }}>
+                    {config.questionText}
+                  </h2>
+                  <p style={{ fontSize:'0.85rem', color:'rgba(253,251,247,0.45)', lineHeight:1.5, marginBottom:'2rem' }}>
+                    {config.subtext}
+                  </p>
+
+                  {config.id === 'review' ? (
+                    <ReviewScreen formData={formData} config={FORM_CONFIG} onEdit={goToStep} />
+                  ) : (
+                    config.fields.map(field => (
+                      <FormField key={field.id} field={field} value={formData[field.id]} onChange={v => setValue(field.id, v)} onAutoAdvance={config.fields.length === 1 ? goNext : null} />
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Bottom nav */}
+              <div style={{
+                background:'rgba(15,23,42,0.95)', backdropFilter:'blur(12px)',
+                borderTop:'1px solid rgba(212,175,55,0.08)', padding:'1rem 1.5rem',
+              }}>
+                <div style={{ maxWidth:'36rem', margin:'0 auto', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                  {step > 0 ? (
+                    <button onClick={goBack} style={{ fontSize:'0.8rem', color:'rgba(253,251,247,0.4)', background:'none', border:'none', cursor:'pointer', padding:'0.75rem 1rem', letterSpacing:'0.05em' }}
+                      onMouseOver={e=>e.target.style.color='#FDFBF7'} onMouseOut={e=>e.target.style.color='rgba(253,251,247,0.4)'}
+                    >← Back</button>
+                  ) : <span />}
+
+                  {config.id === 'personal' ? (
+                    <button onClick={goNext} style={{
+                      padding:'0.75rem 2rem', borderRadius:'9999px', border:'none',
+                      background:'linear-gradient(135deg,#D4AF37,#B8962E)',
+                      color:'#0F172A', fontWeight:600, fontSize:'0.85rem', cursor:'pointer', letterSpacing:'0.03em', transition:'all 0.25s',
+                    }}
+                      onMouseOver={e => { e.target.style.transform='translateY(-1px)'; e.target.style.boxShadow='0 4px 20px rgba(212,175,55,0.3)'; }}
+                      onMouseOut={e => { e.target.style.transform='none'; e.target.style.boxShadow='none'; }}
+                    >{canProceed ? 'Continue →' : 'Skip →'}</button>
+                  ) : (
+                    <button onClick={config.id === 'review' ? handleSubmit : goNext}
+                      disabled={!canProceed && config.id !== 'review'}
+                      style={{
+                        padding:'0.75rem 2rem', borderRadius:'9999px', border:'none',
+                        background: canProceed || config.id === 'review' ? 'linear-gradient(135deg,#D4AF37,#B8962E)' : 'rgba(212,175,55,0.15)',
+                        color: canProceed || config.id === 'review' ? '#0F172A' : 'rgba(253,251,247,0.25)',
+                        fontWeight:600, fontSize:'0.85rem',
+                        cursor: canProceed || config.id === 'review' ? 'pointer' : 'not-allowed',
+                        letterSpacing:'0.03em', transition:'all 0.25s',
+                      }}
+                      onMouseOver={e => { if(canProceed) { e.target.style.transform='translateY(-1px)'; e.target.style.boxShadow='0 4px 20px rgba(212,175,55,0.3)'; }}}
+                      onMouseOut={e => { e.target.style.transform='none'; e.target.style.boxShadow='none'; }}
+                    >{config.id === 'review' ? 'Submit My Song →' : 'Continue →'}</button>
+                  )}
+                </div>
+              </div>
+            </React.Fragment>
+          )}
+        </div>
+      );
+    }
+
     /* ── App ── */
     function App() {
+      const [showIntake, setShowIntake] = useState(false);
+
+      useEffect(() => {
+        if (window.location.hash === '#start') setShowIntake(true);
+        const onHash = () => { if (window.location.hash === '#start') setShowIntake(true); };
+        window.addEventListener('hashchange', onHash);
+        return () => window.removeEventListener('hashchange', onHash);
+      }, []);
+
+      const openIntake = () => setShowIntake(true);
+      const closeIntake = () => { setShowIntake(false); window.location.hash = ''; };
+
       return (
         <div style={{ minHeight:'100vh', background:'#0F172A' }}>
-          <Nav />
-          <Hero />
-          <HowItWorks />
+          <Nav onStart={openIntake} />
+          <Hero onStart={openIntake} />
+          <HowItWorks onStart={openIntake} />
           <Inspiration />
           <Artists />
           <FAQ />
-          <FinalCTA />
+          <FinalCTA onStart={openIntake} />
           <Footer />
-          <SpinPopup />
+          {!showIntake && <SpinPopup />}
+          {showIntake && <IntakeEngine onClose={closeIntake} />}
         </div>
       );
     }
