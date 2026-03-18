@@ -230,13 +230,10 @@
 
     /* ── Waveform ── */
     .waveform-bar {
-      fill: rgba(212, 175, 55, 0.35);
+      fill: rgba(212, 175, 55, 0.45);
       transform-origin: center;
       transform-box: fill-box;
       animation: wavePlay 1.4s ease-in-out infinite alternate;
-    }
-    .testimonial-card:hover .waveform-bar {
-      fill: rgba(212, 175, 55, 0.65);
     }
     @keyframes wavePlay {
       0%   { transform: scaleY(1);    opacity: 0.55; }
@@ -250,7 +247,7 @@
       transition: max-height 0.35s ease;
       max-height: 0;
     }
-    .faq-answer.open { max-height: 200px; }
+    .faq-answer.open { max-height: 400px; }
 
     /* ── Mobile ── */
     @media (max-width: 640px) {
@@ -277,22 +274,18 @@
     ];
     const STEPS = [
       {
-        num: '01', title: 'Tell Us the Occasion',
-        body: 'Select the moment you want to celebrate and set the tone.',
+        num: '01', title: 'Pick the Occasion',
+        body: 'Choose from dozens including:',
         hasOccasionPills: true,
       },
       {
         num: '02', title: 'Choose Your Genre',
-        body: 'Choose your genre. You can add sub-genres or mix later.',
+        body: 'You can add sub-genres or mix several later.',
         hasGenreScroller: true,
       },
       {
-        num: '03', title: 'Answer a Few Questions',
-        body: 'Expertly designed questions help you express those favorite memories, inside jokes, and personal feelings. Our songwriters use these for the perfect lyrics and style.',
-      },
-      {
-        num: '04', title: 'Receive Your Song',
-        body: 'We\u2019ll send you the song 24 hours later \u2014 or 12 hours or less if you choose Accelerated Delivery.',
+        num: '03', title: 'Personalize Your Song',
+        body: 'Tell us those favorite memories, inside jokes, or feelings so we can use them for the perfect lyrics. We\u2019ll send you the song 24 hours later \u2014 or 12 hours or less if you choose Accelerated Delivery.',
       },
     ];
     const GENRES = ['Folk', 'Pop', 'Country', 'R&B', 'Rock', 'Hip-Hop', 'Jazz', 'Classical', 'Blues', 'Indie', 'Soul', 'Reggae', 'Latin', 'Electronic'];
@@ -320,11 +313,9 @@
     ];
     const FAQS = [
       { q:'How much does a custom song cost?', a:'Songs start at $99 for standard delivery. Accelerated delivery and add-ons like extra verses or multiple revisions are available at checkout.' },
-      { q:'How long does it take to receive my song?', a:'Standard delivery is 24 hours. We also offer rush delivery in as little as 6 hours for an additional fee — perfect for last-minute gifts.' },
-      { q:"What if I don't like my song?", a:'We offer unlimited revisions until you are completely satisfied. Your happiness is our guarantee — no exceptions, no fine print.' },
-      { q:'What format will I receive?', a:'A high-quality MP3 and WAV file plus a beautifully formatted PDF of the full lyrics to frame or keep.' },
-      { q:'Can I request a specific artist?', a:'Absolutely. You can request any artist from our roster, or let us match you with the best fit for your genre.' },
-      { q:'Are these AI-generated songs?', a:'No. Every LifeSong has a real human artist helping craft your song. They use tools and instruments they\u2019re most comfortable with, including AI to polish the result, but their human ingenuity and creativity is what will make your song great.' },
+      { q:'How long does it take to receive my song?', a:'Standard delivery is 24 hours. We also offer rush delivery in under 12 hours for an additional fee \u2014 perfect for last-minute gifts.' },
+      { q:"What if I don't like my song?", a:'The basic plan does not include any revisions, while the Plus includes one revision. The Premium Plan offers up to 2 revisions. We also offer a money-back satisfaction guarantee. Just email us at makehappy@lifesong.press, include your name, email and phone number, attach your song and tell us what\u2019s wrong.' },
+      { q:'What will I receive?', a:'All customers get a high-quality MP3 and WAV file. Plus and Premium customers also get a beautifully formatted PDF of the full lyrics to frame or save.' },
     ];
 
     /* ── Intake Engine Config ── */
@@ -460,7 +451,7 @@
         <React.Fragment>
           <span ref={measRef} aria-hidden="true" style={{ position:'absolute', opacity:0, pointerEvents:'none', whiteSpace:'nowrap', visibility:'hidden' }}>
             {TICKER_WORDS.map(w => (
-              <span key={w} data-measure style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic', display:'inline-block', fontSize:'inherit' }}>{w}<span style={{ fontStyle:'normal', fontSize:'0.55em' }}>{' '}Song</span></span>
+              <span key={w} data-measure style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic', display:'inline-block', fontSize:'inherit' }}>{w}</span>
             ))}
           </span>
           <span
@@ -491,7 +482,7 @@
                       ? 'transform 520ms cubic-bezier(0.34,1.56,0.64,1), opacity 350ms ease, filter 400ms ease'
                       : 'none',
                   }}
-                >{word}<span style={{ fontStyle:'normal', fontWeight:500, fontSize:'0.55em', color:'#FDFBF7' }}>{' '}Song</span></span>
+                >{word}</span>
               );
             })}
           </span>
@@ -612,7 +603,7 @@
           {/* Dark tint */}
           <div style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.45)' }} />
           <div className="grain" />
-          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'14rem', background:'linear-gradient(to top,#0F172A,transparent)', pointerEvents:'none' }} />
+          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'14rem', background:'linear-gradient(to top,#FDFBF7,transparent)', pointerEvents:'none' }} />
 
           {/* Content */}
           <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', textAlign:'center' }}>
@@ -624,22 +615,34 @@
               </span>
             </div>
 
-            {/* Headline — balanced sizing so the full phrase reads as one thought */}
+            {/* Headline */}
             <h1 className="anim-2" style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.15, color:'#FDFBF7', margin:0, textAlign:'center' }}>
-              <span style={{ display:'block', fontSize:'clamp(1.5rem,3.5vw,2.5rem)', fontWeight:500, letterSpacing:'0.02em', color:'#FDFBF7' }}>A Custom</span>
-              <span style={{ display:'block', fontSize:'clamp(2rem,6vw,4.5rem)', margin:'0.1em 0' }}><Ticker /></span>
-              <span style={{ display:'block', fontSize:'clamp(1.5rem,3.5vw,2.5rem)', fontWeight:500, letterSpacing:'0.02em', color:'#FDFBF7' }}>Written Just for <em style={{ fontWeight:400, fontStyle:'italic', color:'rgba(253,251,247,0.7)' }}>Them.</em></span>
+              <span style={{ display:'block', fontSize:'clamp(1.25rem,3vw,2rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.8)' }}>A gift that lasts a lifetime</span>
+              <span style={{ display:'block', fontSize:'clamp(1.75rem,5vw,3.5rem)', margin:'0.25em 0 0.1em' }}>Get a custom <Ticker /> song in 24 hours.</span>
             </h1>
 
+            {/* Body bullets */}
+            <div className="anim-3" style={{ marginTop:'1.5rem', display:'flex', flexDirection:'column', alignItems:'center', gap:'0.5rem' }}>
+              {[
+                'Professional producers and musicians',
+                'Original studio-quality music for any occasion',
+                'Starting at just $79',
+              ].map((item, i) => (
+                <p key={i} style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem' }}>
+                  <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> {item}
+                </p>
+              ))}
+            </div>
+
             {/* CTAs */}
-            <div className="anim-3" style={{ marginTop:'2.5rem', display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
+            <div className="anim-4" style={{ marginTop:'2.5rem', display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
               <button onClick={onStart} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
               <button className="btn-ghost" style={{ padding:'0.875rem 2rem', fontSize:'1rem' }}>🎧&nbsp; Listen to Examples</button>
             </div>
 
             {/* Social proof */}
-            <p className="anim-4" style={{ marginTop:'2.5rem', fontSize:'0.75rem', fontWeight:400, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(253,251,247,0.55)' }}>
-              5,000+ Memories Created &nbsp;·&nbsp; ★★★★★ 4.9 / 5
+            <p className="anim-5" style={{ marginTop:'2.5rem', fontSize:'0.75rem', fontWeight:400, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(253,251,247,0.55)' }}>
+              Hundreds of Memories Created &nbsp;·&nbsp; ★★★★★ 4.9 / 5
             </p>
           </div>
 
@@ -653,20 +656,20 @@
     }
 
     /* ── Occasion Pills ── */
-    const OCCASIONS = ['Birthday', 'Anniversary', 'Apology', 'Engagement', 'Memorial', 'Graduation', 'Just Because'];
+    const OCCASIONS = ['Birthday', 'Anniversary', 'Apology', 'Engagement', 'Memorial', 'Graduation', 'Just Because', 'And More'];
     function OccasionPills({ onStart }) {
       return (
         <div style={{ display:'flex', flexWrap:'wrap', gap:'0.4rem', justifyContent:'center', marginTop:'0.75rem' }}>
           {OCCASIONS.map(o => (
             <a key={o} href="#" onClick={e=>{e.preventDefault();onStart&&onStart();}} style={{
               padding:'0.35rem 0.75rem', borderRadius:'9999px',
-              border:'1px solid rgba(212,175,55,0.3)', background:'rgba(212,175,55,0.06)',
-              fontSize:'0.68rem', fontWeight:400, letterSpacing:'0.04em',
-              color:'rgba(212,175,55,0.85)', textDecoration:'none', whiteSpace:'nowrap',
+              border:'1px solid rgba(212,175,55,0.35)', background:'rgba(212,175,55,0.08)',
+              fontSize:'0.68rem', fontWeight:500, letterSpacing:'0.04em',
+              color:'#B8962E', textDecoration:'none', whiteSpace:'nowrap',
               transition:'background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s',
             }}
-            onMouseOver={e => { e.currentTarget.style.background='rgba(212,175,55,0.18)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.6)'; e.currentTarget.style.color='#D4AF37'; e.currentTarget.style.transform='scale(1.05)'; }}
-            onMouseOut={e => { e.currentTarget.style.background='rgba(212,175,55,0.06)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.3)'; e.currentTarget.style.color='rgba(212,175,55,0.85)'; e.currentTarget.style.transform='scale(1)'; }}
+            onMouseOver={e => { e.currentTarget.style.background='rgba(212,175,55,0.2)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.7)'; e.currentTarget.style.color='#96780A'; e.currentTarget.style.transform='scale(1.05)'; }}
+            onMouseOut={e => { e.currentTarget.style.background='rgba(212,175,55,0.08)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.35)'; e.currentTarget.style.color='#B8962E'; e.currentTarget.style.transform='scale(1)'; }}
             >{o}</a>
           ))}
         </div>
@@ -686,19 +689,19 @@
             {GENRES.map(g => (
               <span key={g} style={{
                 flexShrink:0, padding:'0.4rem 0.85rem', borderRadius:'9999px',
-                border:'1px solid rgba(212,175,55,0.3)', background:'rgba(212,175,55,0.06)',
-                fontSize:'0.7rem', fontWeight:400, letterSpacing:'0.05em',
-                color:'rgba(212,175,55,0.85)', whiteSpace:'nowrap', cursor:'pointer',
+                border:'1px solid rgba(212,175,55,0.35)', background:'rgba(212,175,55,0.08)',
+                fontSize:'0.7rem', fontWeight:500, letterSpacing:'0.05em',
+                color:'#B8962E', whiteSpace:'nowrap', cursor:'pointer',
                 transition:'background 0.2s, border-color 0.2s, color 0.2s',
                 display:'inline-flex', alignItems:'center', gap:'0.3rem',
               }}
-              onMouseOver={e => { e.currentTarget.style.background='rgba(212,175,55,0.18)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.6)'; e.currentTarget.style.color='#D4AF37'; }}
-              onMouseOut={e => { e.currentTarget.style.background='rgba(212,175,55,0.06)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.3)'; e.currentTarget.style.color='rgba(212,175,55,0.85)'; }}
+              onMouseOver={e => { e.currentTarget.style.background='rgba(212,175,55,0.2)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.7)'; e.currentTarget.style.color='#96780A'; }}
+              onMouseOut={e => { e.currentTarget.style.background='rgba(212,175,55,0.08)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.35)'; e.currentTarget.style.color='#B8962E'; }}
               ><svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" style={{flexShrink:0}}><polygon points="1,0 7,4 1,8"/></svg>{g}</span>
             ))}
           </div>
           {/* Fade edges */}
-          <div style={{ position:'absolute', top:0, right:0, bottom:'0.5rem', width:'3rem', background:'linear-gradient(to left,#0F172A,transparent)', pointerEvents:'none' }} />
+          <div style={{ position:'absolute', top:0, right:0, bottom:'0.5rem', width:'3rem', background:'linear-gradient(to left,#FDFBF7,transparent)', pointerEvents:'none' }} />
         </div>
       );
     }
@@ -706,22 +709,22 @@
     /* ── How It Works ── */
     function HowItWorks({ onStart }) {
       return (
-        <section id="how-it-works" style={{ padding:'7rem 1.5rem' }}>
+        <section id="how-it-works" style={{ padding:'7rem 1.5rem', background:'#FDFBF7' }}>
           <div style={{ maxWidth:'76rem', margin:'0 auto' }}>
             <div style={{ textAlign:'center', marginBottom:'5rem' }}>
-              <span className="section-label">The Process</span>
-              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#FDFBF7', margin:0 }}>
-                Simple.&nbsp;<em style={{ fontStyle:'italic', fontWeight:400, color:'rgba(253,251,247,0.7)' }}>Magical.</em>&nbsp;Yours.
+              <span className="section-label" style={{ color:'rgba(212,175,55,0.75)' }}>How It Works</span>
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#0F172A', margin:0 }}>
+                How It Works
               </h2>
             </div>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))', gap:'3rem 1.5rem', position:'relative' }}>
+            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))', gap:'3rem 1.5rem', position:'relative' }}>
               {STEPS.map((s,i) => (
                 <div key={i} style={{ display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', overflow:'hidden' }}>
                   <div style={{ position:'relative', marginBottom:'1.5rem' }}>
                     <div style={{
                       width:'5rem', height:'5rem', borderRadius:'50%',
                       background:'radial-gradient(circle,rgba(212,175,55,0.08) 0%,transparent 70%)',
-                      border:'1px solid rgba(212,175,55,0.25)',
+                      border:'1px solid rgba(212,175,55,0.3)',
                       boxShadow:'0 0 0 8px rgba(212,175,55,0.04)',
                       display:'flex', alignItems:'center', justifyContent:'center',
                       margin:'0 auto',
@@ -729,8 +732,8 @@
                       <span className="step-num">{s.num}</span>
                     </div>
                   </div>
-                  <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.25rem', fontWeight:600, color:'#FDFBF7', margin:'0 0 0.75rem' }}>{s.title}</h3>
-                  <p style={{ fontSize:'0.85rem', fontWeight:300, lineHeight:1.7, color:'rgba(253,251,247,0.5)', maxWidth:'16rem', margin:'0 auto' }}>{s.body}</p>
+                  <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.25rem', fontWeight:600, color:'#0F172A', margin:'0 0 0.75rem' }}>{s.title}</h3>
+                  <p style={{ fontSize:'0.85rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.55)', maxWidth:'18rem', margin:'0 auto' }}>{s.body}</p>
                   {s.hasOccasionPills && <OccasionPills onStart={onStart} />}
                   {s.hasGenreScroller && <GenreScroller />}
                 </div>
@@ -760,32 +763,43 @@
     }
 
     /* ── Inspiration / Testimonials ── */
-    function Inspiration() {
+    function Inspiration({ onStart }) {
       return (
-        <section id="inspiration" style={{ padding:'7rem 1.5rem', background:'linear-gradient(to bottom,transparent,rgba(30,41,59,0.25),transparent)' }}>
+        <section id="inspiration" style={{ padding:'7rem 1.5rem', background:'#FDFBF7' }}>
           <div style={{ maxWidth:'72rem', margin:'0 auto' }}>
             <div style={{ textAlign:'center', marginBottom:'4rem' }}>
-              <span className="section-label">Inspiration</span>
-              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#FDFBF7', margin:0 }}>
+              <span className="section-label" style={{ color:'rgba(212,175,55,0.75)' }}>Inspiration</span>
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#0F172A', margin:0 }}>
                 Songs That Stopped Time.
               </h2>
-              <p style={{ marginTop:'1.25rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.7, color:'rgba(253,251,247,0.45)' }}>
+              <p style={{ marginTop:'1.25rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.5)' }}>
                 These are the moments our artists live for.
               </p>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'1.5rem' }}>
               {TESTIMONIALS.map((t,i) => (
-                <div key={i} className="testimonial-card" style={{ display:'flex', flexDirection:'column' }}>
+                <div key={i} style={{
+                  display:'flex', flexDirection:'column',
+                  background:'#fff', border:'1px solid rgba(15,23,42,0.08)',
+                  borderRadius:'1.25rem', padding:'2rem',
+                  boxShadow:'0 4px 24px rgba(0,0,0,0.06)',
+                  transition:'box-shadow 0.3s, transform 0.3s',
+                }}
+                  onMouseOver={e => { e.currentTarget.style.boxShadow='0 8px 32px rgba(0,0,0,0.1)'; e.currentTarget.style.transform='translateY(-4px)'; }}
+                  onMouseOut={e => { e.currentTarget.style.boxShadow='0 4px 24px rgba(0,0,0,0.06)'; e.currentTarget.style.transform='translateY(0)'; }}
+                >
                   {/* Top row: stars + genre tag */}
                   <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:'1rem' }}>
                     <div style={{ display:'flex', gap:'0.2rem' }}>
                       {Array.from({length:t.stars}).map((_,j)=>(<span key={j} style={{ color:'#D4AF37', fontSize:'0.875rem' }}>★</span>))}
                     </div>
-                    <span style={{ fontSize:'0.6rem', fontWeight:400, letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(212,175,55,0.6)', padding:'0.2rem 0.6rem', borderRadius:'9999px', border:'1px solid rgba(212,175,55,0.2)' }}>{t.genre}</span>
+                    <span style={{ fontSize:'0.6rem', fontWeight:500, letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(15,23,42,0.45)', padding:'0.2rem 0.6rem', borderRadius:'9999px', border:'1px solid rgba(15,23,42,0.1)' }}>{t.genre}</span>
                   </div>
                   {/* Quote */}
-                  <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'3rem', lineHeight:1, color:'rgba(212,175,55,0.25)', marginBottom:'0.5rem' }}>"</p>
-                  <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic', fontSize:'1.05rem', lineHeight:1.65, color:'rgba(253,251,247,0.8)', marginBottom:'1.25rem', flex:1 }}>{t.quote}</p>
+                  <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'3rem', lineHeight:1, color:'rgba(212,175,55,0.35)', marginBottom:'0.5rem' }}>"</p>
+                  <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic', fontSize:'1.05rem', lineHeight:1.65, color:'rgba(15,23,42,0.8)', marginBottom:'0.75rem', flex:1 }}>{t.quote}</p>
+                  {/* Attribution — right below quote */}
+                  <p style={{ fontSize:'0.875rem', fontWeight:600, color:'#0F172A', marginBottom:'1.25rem' }}>— {t.name}</p>
                   {/* Player row: play button + waveform + duration */}
                   <div style={{ display:'flex', alignItems:'center', gap:'0.75rem', marginBottom:'1rem' }}>
                     <button style={{
@@ -802,16 +816,16 @@
                       </svg>
                     </button>
                     <div style={{ flex:1 }}><Waveform bars={t.wave} /></div>
-                    <span style={{ fontSize:'0.7rem', fontWeight:400, color:'rgba(253,251,247,0.35)', fontVariantNumeric:'tabular-nums' }}>{t.duration}</span>
+                    <span style={{ fontSize:'0.7rem', fontWeight:400, color:'rgba(15,23,42,0.35)', fontVariantNumeric:'tabular-nums' }}>{t.duration}</span>
                   </div>
                   {/* Song title */}
-                  <p style={{ fontSize:'0.8rem', fontWeight:500, fontStyle:'italic', color:'rgba(212,175,55,0.5)', marginBottom:'0.75rem' }}>"{t.songTitle}"</p>
-                  {/* Attribution */}
-                  <div style={{ borderTop:'1px solid rgba(212,175,55,0.1)', paddingTop:'0.75rem' }}>
-                    <p style={{ fontSize:'0.875rem', fontWeight:500, color:'rgba(253,251,247,0.7)' }}>{t.name}</p>
-                  </div>
+                  <p style={{ fontSize:'0.8rem', fontWeight:500, fontStyle:'italic', color:'rgba(212,175,55,0.65)' }}>"{t.songTitle}"</p>
                 </div>
               ))}
+            </div>
+            {/* CTA */}
+            <div style={{ marginTop:'4rem', display:'flex', justifyContent:'center' }}>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'0.9375rem' }}>Start My Song →</button>
             </div>
           </div>
         </section>
@@ -819,7 +833,7 @@
     }
 
     /* ── Artists ── */
-    function Artists() {
+    function Artists({ onStart }) {
       return (
         <section id="artists" style={{ padding:'7rem 1.5rem' }}>
           <div style={{ maxWidth:'72rem', margin:'0 auto' }}>
@@ -879,13 +893,17 @@
             <p style={{ textAlign:'center', marginTop:'3rem', fontSize:'0.7rem', fontWeight:300, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(253,251,247,0.25)' }}>
               All artists are vetted professionals · Nashville, LA & NYC based
             </p>
+            {/* CTA */}
+            <div style={{ marginTop:'3rem', display:'flex', justifyContent:'center' }}>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'0.9375rem' }}>Start My Song →</button>
+            </div>
           </div>
         </section>
       );
     }
 
     /* ── FAQ ── */
-    function FAQ() {
+    function FAQ({ onStart }) {
       const [openIdx, setOpenIdx] = useState(null);
       return (
         <section id="faq" style={{ padding:'7rem 1.5rem' }}>
@@ -896,6 +914,14 @@
             </div>
             {FAQS.map((faq,i) => {
               const isOpen = openIdx === i;
+              // Render email as a clickable link
+              const renderAnswer = (text) => {
+                if (text.includes('makehappy@lifesong.press')) {
+                  const parts = text.split('makehappy@lifesong.press');
+                  return <span>{parts[0]}<a href="mailto:makehappy@lifesong.press" style={{ color:'#D4AF37', textDecoration:'underline' }}>makehappy@lifesong.press</a>{parts[1]}</span>;
+                }
+                return text;
+              };
               return (
                 <div key={i} className="faq-item">
                   <button
@@ -906,11 +932,15 @@
                     <span style={{ flexShrink:0, marginTop:'0.125rem', fontSize:'1.25rem', color:'rgba(212,175,55,0.6)', transition:'transform 0.3s', transform: isOpen?'rotate(45deg)':'rotate(0deg)' }}>+</span>
                   </button>
                   <div className={`faq-answer ${isOpen?'open':''}`}>
-                    <p style={{ paddingBottom:'1.5rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.75, color:'rgba(253,251,247,0.5)' }}>{faq.a}</p>
+                    <p style={{ paddingBottom:'1.5rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.75, color:'rgba(253,251,247,0.5)' }}>{renderAnswer(faq.a)}</p>
                   </div>
                 </div>
               );
             })}
+            {/* CTA */}
+            <div style={{ marginTop:'3rem', display:'flex', justifyContent:'center' }}>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'0.9375rem' }}>Start My Song →</button>
+            </div>
           </div>
         </section>
       );
@@ -931,12 +961,12 @@
                 Their Song Is Waiting<br/>
                 <em style={{ fontStyle:'italic', fontWeight:400, color:'rgba(253,251,247,0.6)' }}>to Be Written.</em>
               </h2>
-              <p style={{ maxWidth:'24rem', margin:'1.5rem auto 2.5rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.75, color:'rgba(253,251,247,0.45)' }}>
-                Join 5,000+ people who gave the one gift that can never be forgotten, returned, or replaced.
+              <p style={{ maxWidth:'28rem', margin:'1.5rem auto 2.5rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.75, color:'rgba(253,251,247,0.45)' }}>
+                Join hundreds of happy customers who gave the one gift that can never be forgotten, returned, or replaced.
               </p>
               <div style={{ display:'flex', flexWrap:'wrap', alignItems:'center', justifyContent:'center', gap:'1rem' }}>
                 <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2.5rem', fontSize:'1rem' }}>Start My Song →</button>
-                <p style={{ fontSize:'0.75rem', fontWeight:300, color:'rgba(253,251,247,0.3)', margin:0 }}>24-hour delivery · Unlimited revisions</p>
+                <p style={{ fontSize:'0.75rem', fontWeight:300, color:'rgba(253,251,247,0.3)', margin:0 }}>24-hour delivery</p>
               </div>
               {/* Decorative staff */}
               <div style={{ marginTop:'3rem', display:'flex', alignItems:'center', justifyContent:'center', gap:'0.25rem', opacity:0.1 }}>
@@ -1576,9 +1606,9 @@
           <Nav onStart={openIntake} />
           <Hero onStart={openIntake} />
           <HowItWorks onStart={openIntake} />
-          <Inspiration />
-          <Artists />
-          <FAQ />
+          <Inspiration onStart={openIntake} />
+          <Artists onStart={openIntake} />
+          <FAQ onStart={openIntake} />
           <FinalCTA onStart={openIntake} />
           <Footer />
           {!showIntake && <SpinPopup />}
