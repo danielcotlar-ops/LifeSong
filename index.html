@@ -70,6 +70,15 @@
       from { opacity: 0; transform: translateX(-40px); }
       to { opacity: 1; transform: translateX(0); }
     }
+    @keyframes wheelJiggle {
+      0%, 100% { transform: rotate(0deg); }
+      15% { transform: rotate(8deg); }
+      30% { transform: rotate(-6deg); }
+      45% { transform: rotate(5deg); }
+      60% { transform: rotate(-3deg); }
+      75% { transform: rotate(2deg); }
+      90% { transform: rotate(-1deg); }
+    }
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -451,15 +460,16 @@
         <React.Fragment>
           <span ref={measRef} aria-hidden="true" style={{ position:'absolute', opacity:0, pointerEvents:'none', whiteSpace:'nowrap', visibility:'hidden' }}>
             {TICKER_WORDS.map(w => (
-              <span key={w} data-measure style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic', display:'inline-block', fontSize:'inherit' }}>{w}</span>
+              <span key={w} data-measure style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic', fontWeight:600, letterSpacing:'0.1em', display:'inline-block', fontSize:'inherit' }}>{w}</span>
             ))}
           </span>
           <span
             aria-live="polite"
             style={{
-              position:'relative', display:'inline-block',
-              overflow:'visible', verticalAlign:'bottom',
-              height:'1.15em', width: width || 'auto', maxWidth:'92vw',
+              position:'relative', display:'inline-flex',
+              alignItems:'center', justifyContent:'center',
+              overflow:'visible', verticalAlign:'baseline',
+              height:'1.15em', minWidth: width || 'auto', width: width || 'auto', maxWidth:'92vw',
               clipPath:'inset(-5% -12% -5% -12%)',
             }}
           >
@@ -474,7 +484,8 @@
                     position:'absolute', inset:0,
                     display:'flex', alignItems:'center', justifyContent:'center',
                     fontFamily:"'Playfair Display',Georgia,serif",
-                    fontStyle:'italic', whiteSpace:'nowrap',
+                    fontStyle:'italic', fontWeight:600, letterSpacing:'0.1em',
+                    whiteSpace:'nowrap',
                     transform: isActive ? 'translateY(0) scale(1)' : isPrev ? 'translateY(-120%) scale(0.92)' : 'translateY(120%) scale(0.92)',
                     opacity: isActive ? 1 : 0,
                     filter: isActive ? 'blur(0px)' : 'blur(6px)',
@@ -606,36 +617,38 @@
           <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'14rem', background:'linear-gradient(to top,#FDFBF7,transparent)', pointerEvents:'none' }} />
 
           {/* Content */}
-          <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', textAlign:'center' }}>
+          <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', textAlign:'center', WebkitFontSmoothing:'antialiased', MozOsxFontSmoothing:'grayscale' }}>
             {/* Headline */}
-            <h1 className="anim-1" style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.25, color:'#FDFBF7', margin:0, textAlign:'center' }}>
-              <span style={{ display:'block', fontSize:'clamp(1.25rem,3vw,2rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.8)', marginBottom:'0.3em' }}>A gift that lasts a lifetime</span>
-              <span style={{ display:'inline', fontSize:'clamp(1.75rem,5vw,3.5rem)' }}>Get a custom <Ticker /> song</span>
-              <br />
-              <span style={{ fontSize:'clamp(1.75rem,5vw,3.5rem)' }}>in 24 hours.</span>
-            </h1>
+            <div className="anim-1" style={{ marginBottom:'2.5rem' }}>
+              <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.2, color:'#FDFBF7', margin:0, textAlign:'center', textShadow:'0 1px 3px rgba(0,0,0,0.2)' }}>
+                <span style={{ display:'block', fontSize:'clamp(1.25rem,3vw,2rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.8)', marginBottom:'1.5rem', textShadow:'0 1px 3px rgba(0,0,0,0.2)' }}>A gift that lasts a lifetime</span>
+                <span style={{ display:'inline', fontSize:'clamp(1.75rem,5vw,3.5rem)', lineHeight:1.5 }}>Get a custom <Ticker /> song</span>
+                <br />
+                <span style={{ fontSize:'clamp(1.75rem,5vw,3.5rem)' }}><em style={{ fontStyle:'italic', fontWeight:500 }}>in 24 hours.</em></span>
+              </h1>
+            </div>
 
             {/* Body bullets */}
-            <div className="anim-2" style={{ marginTop:'1.5rem', display:'flex', flexDirection:'column', alignItems:'center', gap:'0.5rem' }}>
+            <div className="anim-2" style={{ marginBottom:'2.5rem', display:'flex', flexDirection:'column', alignItems:'center', gap:'0.5rem' }}>
               {[
                 'Professional producers and musicians',
                 'Original studio-quality music for any occasion',
                 'Starting at just $79',
               ].map((item, i) => (
-                <p key={i} style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem' }}>
+                <p key={i} style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
                   <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> {item}
                 </p>
               ))}
             </div>
 
             {/* CTAs */}
-            <div className="anim-3" style={{ marginTop:'2.5rem', display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
-              <button onClick={onStart} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
-              <button className="btn-ghost" style={{ padding:'0.875rem 2rem', fontSize:'1rem' }}>🎧&nbsp; Listen to Examples</button>
+            <div className="anim-3" style={{ marginBottom:'2.5rem', display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
+              <button className="btn-ghost" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>🎧&nbsp; Listen to Examples</button>
             </div>
 
             {/* Social proof */}
-            <p className="anim-4" style={{ marginTop:'2.5rem', fontSize:'0.75rem', fontWeight:400, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(253,251,247,0.55)' }}>
+            <p className="anim-4" style={{ fontSize:'0.75rem', fontWeight:400, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(253,251,247,0.55)', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
               Hundreds of Memories Created &nbsp;·&nbsp; ★★★★★ 4.9 / 5
             </p>
           </div>
@@ -1008,8 +1021,9 @@
     function SpinPopup() {
       const [visible, setVisible] = useState(false);
       const [dismissed, setDismissed] = useState(false);
-      const [phase, setPhase] = useState('spin'); // 'spin' | 'spinning' | 'won' | 'submitted'
+      const [phase, setPhase] = useState('email'); // 'email' | 'spin' | 'spinning' | 'won' | 'submitted'
       const [rotation, setRotation] = useState(0);
+      const [email, setEmail] = useState('');
       const [phone, setPhone] = useState('');
 
       // Show after 10s + scroll
@@ -1029,18 +1043,18 @@
         return () => { clearTimeout(timer); window.removeEventListener('scroll', onScroll); };
       }, [dismissed]);
 
+      const handleEmailSubmit = (e) => {
+        e.preventDefault();
+        if (!email.trim() || !email.includes('@')) return;
+        setPhase('spin');
+      };
+
       const handleSpin = () => {
         if (phase !== 'spin') return;
         setPhase('spinning');
-        // Each segment is 60deg (360/6). We want to land on WINNING_INDEX (5).
-        // Segment center = (5 * 60) + 30 = 330deg from top.
-        // The wheel spins clockwise, pointer at top. We need the winning segment under the pointer.
-        // Final rotation: multiple full spins + offset so segment 5 is at top
-        // Segment 0 starts at 0deg. Pointer is at top (0deg/360deg).
-        // To land segment N under pointer: rotate = 360 - (N * 60 + 30) + fullSpins
         const segDeg = 360 / WHEEL_SEGMENTS.length;
         const targetAngle = 360 - (WINNING_INDEX * segDeg + segDeg / 2);
-        const fullSpins = 360 * 6; // 6 full rotations
+        const fullSpins = 360 * 6;
         const finalRotation = fullSpins + targetAngle;
         setRotation(finalRotation);
         setTimeout(() => setPhase('won'), 4500);
@@ -1056,6 +1070,61 @@
 
       if (!visible || dismissed) return null;
 
+      const renderWheel = () => (
+        <div style={{ position:'relative', width:'220px', height:'220px', margin:'0 auto 1.5rem' }}>
+          {/* Pointer triangle at top */}
+          <div style={{
+            position:'absolute', top:'-10px', left:'50%', transform:'translateX(-50%)',
+            width:0, height:0, borderLeft:'10px solid transparent', borderRight:'10px solid transparent',
+            borderTop:'16px solid #D4AF37', zIndex:2, filter:'drop-shadow(0 2px 4px rgba(0,0,0,0.4))',
+          }} />
+          {/* Wheel SVG */}
+          <svg viewBox="0 0 200 200" style={{
+            width:'220px', height:'220px',
+            transform: `rotate(${rotation}deg)`,
+            transition: phase === 'spinning' ? 'transform 4s cubic-bezier(0.17,0.67,0.12,0.99)' : 'none',
+            animation: phase === 'email' ? 'wheelJiggle 2.5s ease-in-out infinite' : phase === 'spin' ? 'wheelJiggle 2.5s ease-in-out infinite' : 'none',
+          }}>
+            {WHEEL_SEGMENTS.map((seg, idx) => {
+              const angle = 360 / WHEEL_SEGMENTS.length;
+              const startAngle = idx * angle - 90;
+              const endAngle = startAngle + angle;
+              const startRad = (startAngle * Math.PI) / 180;
+              const endRad = (endAngle * Math.PI) / 180;
+              const x1 = 100 + 95 * Math.cos(startRad);
+              const y1 = 100 + 95 * Math.sin(startRad);
+              const x2 = 100 + 95 * Math.cos(endRad);
+              const y2 = 100 + 95 * Math.sin(endRad);
+              const midAngle = startAngle + angle / 2;
+              const midRad = (midAngle * Math.PI) / 180;
+              const textX = 100 + 60 * Math.cos(midRad);
+              const textY = 100 + 60 * Math.sin(midRad);
+              const isWinner = idx === WINNING_INDEX;
+              return (
+                <React.Fragment key={idx}>
+                  <path
+                    d={`M100,100 L${x1},${y1} A95,95 0 0,1 ${x2},${y2} Z`}
+                    fill={isWinner ? 'rgba(212,175,55,0.2)' : seg.color}
+                    stroke="rgba(212,175,55,0.15)" strokeWidth="0.5"
+                  />
+                  <text
+                    x={textX} y={textY}
+                    fill={isWinner ? '#D4AF37' : 'rgba(253,251,247,0.6)'}
+                    fontSize="8" fontWeight={isWinner ? '700' : '500'}
+                    textAnchor="middle" dominantBaseline="middle"
+                    transform={`rotate(${midAngle}, ${textX}, ${textY})`}
+                    style={{ fontFamily:'Inter,sans-serif', letterSpacing:'0.05em' }}
+                  >{seg.label}</text>
+                </React.Fragment>
+              );
+            })}
+            {/* Center circle */}
+            <circle cx="100" cy="100" r="18" fill="#0F172A" stroke="rgba(212,175,55,0.3)" strokeWidth="1.5" />
+            <text x="100" y="101" fill="#D4AF37" fontSize="7" fontWeight="600" textAnchor="middle" dominantBaseline="middle" style={{fontFamily:'Inter,sans-serif'}}>SPIN</text>
+          </svg>
+        </div>
+      );
+
       return (
         <div style={{
           position:'fixed', inset:0, zIndex:9999,
@@ -1069,7 +1138,7 @@
             borderRadius:'1.5rem', padding:'2rem 1.75rem',
             boxShadow:'0 32px 80px rgba(0,0,0,0.6), 0 0 80px rgba(212,175,55,0.06)',
           }}>
-            {/* Close X — small, upper left */}
+            {/* Close X */}
             <button onClick={close} style={{
               position:'absolute', top:'0.75rem', left:'0.75rem',
               background:'none', border:'none', color:'rgba(253,251,247,0.3)',
@@ -1079,7 +1148,6 @@
                onMouseOut={e=>e.target.style.color='rgba(253,251,247,0.3)'}>✕</button>
 
             {phase === 'submitted' ? (
-              /* Thank you state */
               <div style={{ textAlign:'center', padding:'2rem 0' }}>
                 <div style={{ fontSize:'3rem', marginBottom:'1rem' }}>🎉</div>
                 <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.5rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.75rem' }}>You're All Set!</h3>
@@ -1088,14 +1156,13 @@
                 </p>
               </div>
             ) : phase === 'won' ? (
-              /* Won state — collect SMS */
               <div style={{ textAlign:'center' }}>
                 <div style={{ fontSize:'2.5rem', marginBottom:'0.5rem' }}>🎊</div>
                 <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.75rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.25rem' }}>
                   Congratulations, you won <span style={{color:'#D4AF37'}}>$30 off!</span>
                 </h3>
                 <p style={{ fontSize:'0.9rem', color:'rgba(253,251,247,0.6)', marginTop:'0.75rem', marginBottom:'1.25rem' }}>
-                  Sign up for SMS to collect your discount
+                  Enter your number to collect your discount via text
                 </p>
                 <form onSubmit={handleSubmit} style={{ display:'flex', gap:'0.5rem', marginBottom:'1rem' }}>
                   <input
@@ -1120,72 +1187,53 @@
                   >Claim</button>
                 </form>
                 <p style={{ fontSize:'0.6rem', lineHeight:1.5, color:'rgba(253,251,247,0.3)', textAlign:'left' }}>
-                  By sharing your text number, you consent to receive texts with updates about your song (e.g. links to your song when done), as well as updates from Lifesong about our products and occasional promotions. Consent is not a condition of purchase. Message and data rates may apply. We don't sell or share your data with any 3rd parties. Msg frequency varies. Msg and data rates may apply. View <a href="#" style={{color:'rgba(212,175,55,0.5)', textDecoration:'underline'}}>Terms</a> & <a href="#" style={{color:'rgba(212,175,55,0.5)', textDecoration:'underline'}}>Privacy</a>.
+                  By sharing your number, you consent to receive texts with updates about your song and occasional promotions from LifeSong. Consent is not a condition of purchase. Msg and data rates may apply. View <a href="#" style={{color:'rgba(212,175,55,0.5)', textDecoration:'underline'}}>Terms</a> & <a href="#" style={{color:'rgba(212,175,55,0.5)', textDecoration:'underline'}}>Privacy</a>.
                 </p>
               </div>
-            ) : (
-              /* Spin state */
+            ) : phase === 'email' ? (
+              /* Email gate — enter email to unlock the spin */
               <div style={{ textAlign:'center' }}>
                 <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.25rem' }}>
                   Spin to Win!
                 </h3>
                 <p style={{ fontSize:'0.8rem', color:'rgba(253,251,247,0.5)', marginBottom:'1.5rem' }}>
-                  Try your luck for a discount on your custom song
+                  Enter your email to spin the wheel for a discount
                 </p>
-
-                {/* Wheel */}
-                <div style={{ position:'relative', width:'220px', height:'220px', margin:'0 auto 1.5rem' }}>
-                  {/* Pointer triangle at top */}
-                  <div style={{
-                    position:'absolute', top:'-10px', left:'50%', transform:'translateX(-50%)',
-                    width:0, height:0, borderLeft:'10px solid transparent', borderRight:'10px solid transparent',
-                    borderTop:'16px solid #D4AF37', zIndex:2, filter:'drop-shadow(0 2px 4px rgba(0,0,0,0.4))',
-                  }} />
-                  {/* Wheel SVG */}
-                  <svg viewBox="0 0 200 200" style={{
-                    width:'220px', height:'220px',
-                    transform: `rotate(${rotation}deg)`,
-                    transition: phase === 'spinning' ? 'transform 4s cubic-bezier(0.17,0.67,0.12,0.99)' : 'none',
-                  }}>
-                    {WHEEL_SEGMENTS.map((seg, idx) => {
-                      const angle = 360 / WHEEL_SEGMENTS.length;
-                      const startAngle = idx * angle - 90;
-                      const endAngle = startAngle + angle;
-                      const startRad = (startAngle * Math.PI) / 180;
-                      const endRad = (endAngle * Math.PI) / 180;
-                      const x1 = 100 + 95 * Math.cos(startRad);
-                      const y1 = 100 + 95 * Math.sin(startRad);
-                      const x2 = 100 + 95 * Math.cos(endRad);
-                      const y2 = 100 + 95 * Math.sin(endRad);
-                      const midAngle = startAngle + angle / 2;
-                      const midRad = (midAngle * Math.PI) / 180;
-                      const textX = 100 + 60 * Math.cos(midRad);
-                      const textY = 100 + 60 * Math.sin(midRad);
-                      const isWinner = idx === WINNING_INDEX;
-                      return (
-                        <React.Fragment key={idx}>
-                          <path
-                            d={`M100,100 L${x1},${y1} A95,95 0 0,1 ${x2},${y2} Z`}
-                            fill={isWinner ? 'rgba(212,175,55,0.2)' : seg.color}
-                            stroke="rgba(212,175,55,0.15)" strokeWidth="0.5"
-                          />
-                          <text
-                            x={textX} y={textY}
-                            fill={isWinner ? '#D4AF37' : 'rgba(253,251,247,0.6)'}
-                            fontSize="8" fontWeight={isWinner ? '700' : '500'}
-                            textAnchor="middle" dominantBaseline="middle"
-                            transform={`rotate(${midAngle}, ${textX}, ${textY})`}
-                            style={{ fontFamily:'Inter,sans-serif', letterSpacing:'0.05em' }}
-                          >{seg.label}</text>
-                        </React.Fragment>
-                      );
-                    })}
-                    {/* Center circle */}
-                    <circle cx="100" cy="100" r="18" fill="#0F172A" stroke="rgba(212,175,55,0.3)" strokeWidth="1.5" />
-                    <text x="100" y="101" fill="#D4AF37" fontSize="7" fontWeight="600" textAnchor="middle" dominantBaseline="middle" style={{fontFamily:'Inter,sans-serif'}}>SPIN</text>
-                  </svg>
-                </div>
-
+                {renderWheel()}
+                <form onSubmit={handleEmailSubmit} style={{ display:'flex', gap:'0.5rem', marginBottom:'0.75rem' }}>
+                  <input
+                    type="email" placeholder="your@email.com" value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    style={{
+                      flex:1, padding:'0.75rem 1rem', borderRadius:'0.75rem',
+                      border:'1px solid rgba(212,175,55,0.3)', background:'rgba(15,23,42,0.8)',
+                      color:'#FDFBF7', fontSize:'0.9rem', outline:'none',
+                    }}
+                    onFocus={e=>e.target.style.borderColor='rgba(212,175,55,0.6)'}
+                    onBlur={e=>e.target.style.borderColor='rgba(212,175,55,0.3)'}
+                  />
+                  <button type="submit" style={{
+                    padding:'0.75rem 1.5rem', borderRadius:'0.75rem',
+                    background:'#D4AF37', color:'#0F172A', fontWeight:700, fontSize:'0.85rem',
+                    border:'none', cursor:'pointer', whiteSpace:'nowrap',
+                    transition:'background 0.2s',
+                    animation:'pulseGold 2.8s ease-in-out infinite',
+                  }}
+                    onMouseOver={e=>e.target.style.background='#E8C844'}
+                    onMouseOut={e=>e.target.style.background='#D4AF37'}
+                  >Unlock Spin</button>
+                </form>
+              </div>
+            ) : (
+              /* Spin state — email collected, ready to spin */
+              <div style={{ textAlign:'center' }}>
+                <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.25rem' }}>
+                  {phase === 'spinning' ? 'Good luck!' : 'Ready to spin!'}
+                </h3>
+                <p style={{ fontSize:'0.8rem', color:'rgba(253,251,247,0.5)', marginBottom:'1.5rem' }}>
+                  {phase === 'spinning' ? 'The wheel is spinning...' : 'Tap the button below to spin the wheel'}
+                </p>
+                {renderWheel()}
                 <button onClick={handleSpin} disabled={phase==='spinning'} style={{
                   padding:'0.75rem 2.5rem', borderRadius:'9999px',
                   background: phase==='spinning' ? 'rgba(212,175,55,0.4)' : '#D4AF37',
