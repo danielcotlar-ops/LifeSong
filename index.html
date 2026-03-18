@@ -272,8 +272,8 @@
 
     /* ── Data ── */
     const TICKER_WORDS = [
-      'BIRTHDAY', 'ANNIVERSARY', "I'M SORRY",
-      "MOTHER'S DAY", 'CONGRATULATIONS', 'NEW BABY', 'GRADUATION',
+      'Birthday', 'Anniversary', 'Apology',
+      "Mother's Day", 'Congratulations', 'New Baby', 'Graduation',
     ];
     const NAV_LINKS = [
       { href: '#how-it-works', label: 'How It Works' },
@@ -460,17 +460,16 @@
         <React.Fragment>
           <span ref={measRef} aria-hidden="true" style={{ position:'absolute', opacity:0, pointerEvents:'none', whiteSpace:'nowrap', visibility:'hidden' }}>
             {TICKER_WORDS.map(w => (
-              <span key={w} data-measure style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic', fontWeight:600, letterSpacing:'0.1em', display:'inline-block', fontSize:'inherit' }}>{w}</span>
+              <span key={w} data-measure style={{ fontWeight:500, letterSpacing:'0.04em', display:'inline-block', fontSize:'inherit' }}>{w}</span>
             ))}
           </span>
           <span
             aria-live="polite"
             style={{
-              position:'relative', display:'inline-flex',
-              alignItems:'center', justifyContent:'center',
+              position:'relative', display:'inline-block',
               overflow:'visible', verticalAlign:'baseline',
-              height:'1.15em', minWidth: width || 'auto', width: width || 'auto', maxWidth:'92vw',
-              clipPath:'inset(-5% -12% -5% -12%)',
+              height:'1.3em', minWidth: width || 'auto', width: width || 'auto',
+              clipPath:'inset(-5% -8% -5% -8%)',
             }}
           >
             {TICKER_WORDS.map((word,i) => {
@@ -479,18 +478,16 @@
               return (
                 <span
                   key={word}
-                  className="text-gold-gradient"
                   style={{
                     position:'absolute', inset:0,
                     display:'flex', alignItems:'center', justifyContent:'center',
-                    fontFamily:"'Playfair Display',Georgia,serif",
-                    fontStyle:'italic', fontWeight:600, letterSpacing:'0.1em',
+                    fontWeight:500, letterSpacing:'0.04em',
+                    color:'#D4AF37',
                     whiteSpace:'nowrap',
-                    transform: isActive ? 'translateY(0) scale(1)' : isPrev ? 'translateY(-120%) scale(0.92)' : 'translateY(120%) scale(0.92)',
+                    transform: isActive ? 'translateY(0)' : isPrev ? 'translateY(-110%)' : 'translateY(110%)',
                     opacity: isActive ? 1 : 0,
-                    filter: isActive ? 'blur(0px)' : 'blur(6px)',
                     transition: (isActive||isPrev)
-                      ? 'transform 520ms cubic-bezier(0.34,1.56,0.64,1), opacity 350ms ease, filter 400ms ease'
+                      ? 'transform 420ms cubic-bezier(0.34,1.56,0.64,1), opacity 300ms ease'
                       : 'none',
                   }}
                 >{word}</span>
@@ -620,25 +617,26 @@
           <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', textAlign:'center', WebkitFontSmoothing:'antialiased', MozOsxFontSmoothing:'grayscale' }}>
             {/* Headline */}
             <div className="anim-1" style={{ marginBottom:'2.5rem' }}>
-              <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.2, color:'#FDFBF7', margin:0, textAlign:'center', textShadow:'0 1px 3px rgba(0,0,0,0.2)' }}>
+              <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.2, margin:0, textAlign:'center', textShadow:'0 1px 3px rgba(0,0,0,0.2)' }}>
                 <span style={{ display:'block', fontSize:'clamp(1.25rem,3vw,2rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.8)', marginBottom:'1.5rem', textShadow:'0 1px 3px rgba(0,0,0,0.2)' }}>A gift that lasts a lifetime</span>
-                <span style={{ display:'inline', fontSize:'clamp(1.75rem,5vw,3.5rem)', lineHeight:1.5 }}>Get a custom <Ticker /> song</span>
-                <br />
-                <span style={{ fontSize:'clamp(1.75rem,5vw,3.5rem)' }}><em style={{ fontStyle:'italic', fontWeight:500 }}>in 24 hours.</em></span>
+                <span className="text-gold-gradient" style={{ display:'block', fontSize:'clamp(1.75rem,5vw,3.5rem)', letterSpacing:'0.02em' }}>Get a Custom Song in 24 Hours</span>
               </h1>
             </div>
 
             {/* Body bullets */}
             <div className="anim-2" style={{ marginBottom:'2.5rem', display:'flex', flexDirection:'column', alignItems:'center', gap:'0.5rem' }}>
-              {[
-                'Professional producers and musicians',
-                'Original studio-quality music for any occasion',
-                'Starting at just $79',
-              ].map((item, i) => (
-                <p key={i} style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
-                  <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> {item}
-                </p>
-              ))}
+              <p style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
+                <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> Professional producers and musicians
+              </p>
+              <p style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
+                <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> Original studio-quality music for any occasion
+              </p>
+              <p style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
+                <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> A perfect <Ticker /> gift
+              </p>
+              <p style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
+                <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> Starting at just $79
+              </p>
             </div>
 
             {/* CTAs */}
@@ -1043,14 +1041,9 @@
         return () => { clearTimeout(timer); window.removeEventListener('scroll', onScroll); };
       }, [dismissed]);
 
-      const handleEmailSubmit = (e) => {
-        e.preventDefault();
-        if (!email.trim() || !email.includes('@')) return;
-        setPhase('spin');
-      };
-
       const handleSpin = () => {
-        if (phase !== 'spin') return;
+        if (phase === 'spinning') return;
+        if (!email.trim() || !email.includes('@')) return;
         setPhase('spinning');
         const segDeg = 360 / WHEEL_SEGMENTS.length;
         const targetAngle = 360 - (WINNING_INDEX * segDeg + segDeg / 2);
@@ -1190,60 +1183,42 @@
                   By sharing your number, you consent to receive texts with updates about your song and occasional promotions from LifeSong. Consent is not a condition of purchase. Msg and data rates may apply. View <a href="#" style={{color:'rgba(212,175,55,0.5)', textDecoration:'underline'}}>Terms</a> & <a href="#" style={{color:'rgba(212,175,55,0.5)', textDecoration:'underline'}}>Privacy</a>.
                 </p>
               </div>
-            ) : phase === 'email' ? (
-              /* Email gate — enter email to unlock the spin */
-              <div style={{ textAlign:'center' }}>
-                <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.25rem' }}>
-                  Spin to Win!
-                </h3>
-                <p style={{ fontSize:'0.8rem', color:'rgba(253,251,247,0.5)', marginBottom:'1.5rem' }}>
-                  Enter your email to spin the wheel for a discount
-                </p>
-                {renderWheel()}
-                <form onSubmit={handleEmailSubmit} style={{ display:'flex', gap:'0.5rem', marginBottom:'0.75rem' }}>
-                  <input
-                    type="email" placeholder="your@email.com" value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    style={{
-                      flex:1, padding:'0.75rem 1rem', borderRadius:'0.75rem',
-                      border:'1px solid rgba(212,175,55,0.3)', background:'rgba(15,23,42,0.8)',
-                      color:'#FDFBF7', fontSize:'0.9rem', outline:'none',
-                    }}
-                    onFocus={e=>e.target.style.borderColor='rgba(212,175,55,0.6)'}
-                    onBlur={e=>e.target.style.borderColor='rgba(212,175,55,0.3)'}
-                  />
-                  <button type="submit" style={{
-                    padding:'0.75rem 1.5rem', borderRadius:'0.75rem',
-                    background:'#D4AF37', color:'#0F172A', fontWeight:700, fontSize:'0.85rem',
-                    border:'none', cursor:'pointer', whiteSpace:'nowrap',
-                    transition:'background 0.2s',
-                    animation:'pulseGold 2.8s ease-in-out infinite',
-                  }}
-                    onMouseOver={e=>e.target.style.background='#E8C844'}
-                    onMouseOut={e=>e.target.style.background='#D4AF37'}
-                  >Unlock Spin</button>
-                </form>
-              </div>
             ) : (
-              /* Spin state — email collected, ready to spin */
+              /* Email + Spin combined state */
               <div style={{ textAlign:'center' }}>
                 <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.25rem' }}>
-                  {phase === 'spinning' ? 'Good luck!' : 'Ready to spin!'}
+                  {phase === 'spinning' ? 'Good luck!' : 'Spin to Win!'}
                 </h3>
                 <p style={{ fontSize:'0.8rem', color:'rgba(253,251,247,0.5)', marginBottom:'1.5rem' }}>
-                  {phase === 'spinning' ? 'The wheel is spinning...' : 'Tap the button below to spin the wheel'}
+                  {phase === 'spinning' ? 'The wheel is spinning...' : 'Enter your email and spin for a discount'}
                 </p>
                 {renderWheel()}
+                {phase !== 'spinning' && (
+                  <div style={{ marginBottom:'1rem' }}>
+                    <input
+                      type="email" placeholder="your@email.com" value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      style={{
+                        width:'100%', padding:'0.75rem 1rem', borderRadius:'0.75rem',
+                        border:'1px solid rgba(212,175,55,0.3)', background:'rgba(15,23,42,0.8)',
+                        color:'#FDFBF7', fontSize:'0.9rem', outline:'none', marginBottom:'0.75rem',
+                      }}
+                      onFocus={e=>e.target.style.borderColor='rgba(212,175,55,0.6)'}
+                      onBlur={e=>e.target.style.borderColor='rgba(212,175,55,0.3)'}
+                    />
+                  </div>
+                )}
                 <button onClick={handleSpin} disabled={phase==='spinning'} style={{
                   padding:'0.75rem 2.5rem', borderRadius:'9999px',
-                  background: phase==='spinning' ? 'rgba(212,175,55,0.4)' : '#D4AF37',
-                  color:'#0F172A', fontWeight:700, fontSize:'0.95rem',
+                  background: phase==='spinning' ? 'rgba(212,175,55,0.4)' : (!email.trim() || !email.includes('@')) ? 'rgba(212,175,55,0.25)' : '#D4AF37',
+                  color: (!email.trim() || !email.includes('@')) && phase !== 'spinning' ? 'rgba(15,23,42,0.5)' : '#0F172A',
+                  fontWeight:700, fontSize:'0.95rem',
                   border:'none', cursor: phase==='spinning' ? 'default' : 'pointer',
                   letterSpacing:'0.03em', transition:'background 0.2s, transform 0.15s',
-                  animation: phase==='spin' ? 'pulseGold 2.8s ease-in-out infinite' : 'none',
+                  animation: email.includes('@') && phase==='email' ? 'pulseGold 2.8s ease-in-out infinite' : 'none',
                 }}
-                  onMouseOver={e => { if(phase==='spin') e.target.style.background='#E8C844'; }}
-                  onMouseOut={e => { if(phase==='spin') e.target.style.background='#D4AF37'; }}
+                  onMouseOver={e => { if(phase!=='spinning' && email.includes('@')) e.target.style.background='#E8C844'; }}
+                  onMouseOut={e => { if(phase!=='spinning' && email.includes('@')) e.target.style.background='#D4AF37'; }}
                 >{phase==='spinning' ? 'Spinning...' : 'Spin the Wheel!'}</button>
               </div>
             )}
