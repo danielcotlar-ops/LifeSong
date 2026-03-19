@@ -321,7 +321,7 @@
         wave:[4,6,10,8,12,10,14,12,16,14,12,10,14,12,16,14,12,10,8,10,12,14,12,10,8,10,12,10,8,10,8,6,8,10,12,10,8,6,8,4] },
     ];
     const FAQS = [
-      { q:'How much does a custom song cost?', a:'Songs start at $99 for standard delivery. Accelerated delivery and add-ons like extra verses or multiple revisions are available at checkout.' },
+      { q:'How much does a custom song cost?', a:'Songs start at $79 for standard delivery. Accelerated delivery and add-ons like extra verses or multiple revisions are available at checkout.' },
       { q:'How long does it take to receive my song?', a:'Standard delivery is 24 hours. We also offer rush delivery in under 12 hours for an additional fee \u2014 perfect for last-minute gifts.' },
       { q:"What if I don't like my song?", a:'The basic plan does not include any revisions, while the Plus includes one revision. The Premium Plan offers up to 2 revisions. We also offer a money-back satisfaction guarantee. Just email us at makehappy@lifesong.press, include your name, email and phone number, attach your song and tell us what\u2019s wrong.' },
       { q:'What will I receive?', a:'All customers get a high-quality MP3 and WAV file. Plus and Premium customers also get a beautifully formatted PDF of the full lyrics to frame or save.' },
@@ -439,7 +439,7 @@
         if (!measRef.current) return;
         let max = 0;
         measRef.current.querySelectorAll('[data-measure]').forEach(s => { if (s.offsetWidth > max) max = s.offsetWidth });
-        setWidth(max + 20);
+        setWidth(max + 6);
       }, []);
 
       /* Variable-duration timer so BIRTHDAY gets exactly 2s */
@@ -738,7 +738,7 @@
                     </div>
                   </div>
                   <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.25rem', fontWeight:600, color:'#0F172A', margin:'0 0 0.75rem' }}>{s.title}</h3>
-                  <p style={{ fontSize:'0.85rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.55)', maxWidth:'18rem', margin:'0 auto' }}>{s.body}</p>
+                  <p style={{ fontSize:'0.85rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.7)', maxWidth:'18rem', margin:'0 auto' }}>{s.body}</p>
                   {s.hasOccasionPills && <OccasionPills onStart={onStart} />}
                   {s.hasGenreScroller && <GenreScroller />}
                 </div>
@@ -777,7 +777,7 @@
               <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#0F172A', margin:0 }}>
                 Songs That Stopped Time.
               </h2>
-              <p style={{ marginTop:'1.25rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.5)' }}>
+              <p style={{ marginTop:'1.25rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.7)' }}>
                 These are the moments our artists live for.
               </p>
             </div>
@@ -858,13 +858,16 @@
                   <div style={{
                     width:'6rem', height:'6rem', borderRadius:'50%',
                     margin:'0 auto 1.5rem', overflow:'hidden',
-                    border:'2px solid rgba(212,175,55,0.3)',
-                    boxShadow:'0 8px 32px rgba(0,0,0,0.35)',
-                    transition:'transform 0.4s cubic-bezier(0.34,1.56,0.64,1), border-color 0.3s',
-                    transform: hovered ? 'scale(1.12)' : 'scale(1)',
+                    border:'2px solid',
                     borderColor: hovered ? 'rgba(212,175,55,0.6)' : 'rgba(212,175,55,0.3)',
+                    boxShadow:'0 8px 32px rgba(0,0,0,0.35)',
+                    transition:'border-color 0.3s',
                   }}>
-                    <img src={a.photo} alt={a.name} style={{ width:'100%', height:'100%', objectFit:'cover' }} />
+                    <img src={a.photo} alt={a.name} style={{
+                      width:'100%', height:'100%', objectFit:'cover',
+                      transition:'transform 0.4s cubic-bezier(0.34,1.56,0.64,1)',
+                      transform: hovered ? 'scale(1.15)' : 'scale(1)',
+                    }} />
                   </div>
                   <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.5rem', fontWeight:600, color:'#FDFBF7', margin:'0 0 0.25rem' }}>{a.name}</h3>
                   <span style={{ fontSize:'0.68rem', letterSpacing:'0.22em', textTransform:'uppercase', color:'rgba(212,175,55,0.55)', fontWeight:300 }}>{a.genre}</span>
@@ -1012,9 +1015,9 @@
       { label: '$15 OFF', color: '#1E293B' },
       { label: '$10 OFF', color: '#162032' },
       { label: 'TRY AGAIN', color: '#1E293B' },
-      { label: '$30 OFF', color: '#162032' },
+      { label: '$20 OFF', color: '#162032' },
     ];
-    const WINNING_INDEX = 5; // $30 OFF
+    const WINNING_INDEX = 5; // $20 OFF
 
     function SpinPopup() {
       const [visible, setVisible] = useState(false);
@@ -1044,12 +1047,17 @@
       const handleSpin = () => {
         if (phase === 'spinning') return;
         if (!email.trim() || !email.includes('@')) return;
+        // Stop jiggle first, then start spin after a frame so browser can reset animation
         setPhase('spinning');
-        const segDeg = 360 / WHEEL_SEGMENTS.length;
-        const targetAngle = 360 - (WINNING_INDEX * segDeg + segDeg / 2);
-        const fullSpins = 360 * 6;
-        const finalRotation = fullSpins + targetAngle;
-        setRotation(finalRotation);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            const segDeg = 360 / WHEEL_SEGMENTS.length;
+            const targetAngle = 360 - (WINNING_INDEX * segDeg + segDeg / 2);
+            const fullSpins = 360 * 6;
+            const finalRotation = fullSpins + targetAngle;
+            setRotation(finalRotation);
+          });
+        });
         setTimeout(() => setPhase('won'), 4500);
       };
 
@@ -1076,7 +1084,7 @@
             width:'220px', height:'220px',
             transform: `rotate(${rotation}deg)`,
             transition: phase === 'spinning' ? 'transform 4s cubic-bezier(0.17,0.67,0.12,0.99)' : 'none',
-            animation: phase === 'email' ? 'wheelJiggle 2.5s ease-in-out infinite' : phase === 'spin' ? 'wheelJiggle 2.5s ease-in-out infinite' : 'none',
+            animation: phase === 'email' ? 'wheelJiggle 2.5s ease-in-out infinite' : 'none',
           }}>
             {WHEEL_SEGMENTS.map((seg, idx) => {
               const angle = 360 / WHEEL_SEGMENTS.length;
@@ -1103,7 +1111,7 @@
                   <text
                     x={textX} y={textY}
                     fill={isWinner ? '#D4AF37' : 'rgba(253,251,247,0.6)'}
-                    fontSize="8" fontWeight={isWinner ? '700' : '500'}
+                    fontSize="9" fontWeight={isWinner ? '700' : '500'}
                     textAnchor="middle" dominantBaseline="middle"
                     transform={`rotate(${midAngle}, ${textX}, ${textY})`}
                     style={{ fontFamily:'Inter,sans-serif', letterSpacing:'0.05em' }}
@@ -1113,7 +1121,7 @@
             })}
             {/* Center circle */}
             <circle cx="100" cy="100" r="18" fill="#0F172A" stroke="rgba(212,175,55,0.3)" strokeWidth="1.5" />
-            <text x="100" y="101" fill="#D4AF37" fontSize="7" fontWeight="600" textAnchor="middle" dominantBaseline="middle" style={{fontFamily:'Inter,sans-serif'}}>SPIN</text>
+            <text x="100" y="101" fill="#D4AF37" fontSize="8" fontWeight="600" textAnchor="middle" dominantBaseline="middle" style={{fontFamily:'Inter,sans-serif'}}>SPIN</text>
           </svg>
         </div>
       );
@@ -1186,10 +1194,10 @@
             ) : (
               /* Email + Spin combined state */
               <div style={{ textAlign:'center' }}>
-                <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.25rem' }}>
+                <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.5rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.35rem' }}>
                   {phase === 'spinning' ? 'Good luck!' : 'Spin to Win!'}
                 </h3>
-                <p style={{ fontSize:'0.8rem', color:'rgba(253,251,247,0.5)', marginBottom:'1.5rem' }}>
+                <p style={{ fontSize:'0.9rem', color:'rgba(253,251,247,0.6)', marginBottom:'1.5rem' }}>
                   {phase === 'spinning' ? 'The wheel is spinning...' : 'Enter your email and spin for a discount'}
                 </p>
                 {renderWheel()}
