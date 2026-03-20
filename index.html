@@ -611,52 +611,59 @@
           {/* Dark tint */}
           <div style={{ position:'absolute', inset:0, background:'rgba(0,0,0,0.45)' }} />
           <div className="grain" />
-          <div style={{ position:'absolute', bottom:0, left:0, right:0, height:'14rem', background:'linear-gradient(to top,#FDFBF7,transparent)', pointerEvents:'none' }} />
+          {/* fade removed */}
 
           {/* Content */}
-          <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', textAlign:'center', WebkitFontSmoothing:'antialiased', MozOsxFontSmoothing:'grayscale' }}>
-            {/* Headline — above frosted panel */}
-            <div className="anim-1" style={{ marginBottom:'1.5rem' }}>
-              <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.2, margin:0, textAlign:'center', textShadow:'0 2px 8px rgba(0,0,0,0.4)' }}>
-                <span style={{ display:'block', fontSize:'clamp(1.25rem,3vw,2rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.8)', marginBottom:'1rem', textShadow:'0 2px 8px rgba(0,0,0,0.4)' }}>A gift that lasts a lifetime</span>
-                <span className="text-gold-gradient" style={{ display:'block', fontSize:'clamp(1.75rem,5vw,3.5rem)', letterSpacing:'0.02em' }}>Get a Custom Song in 24 Hrs.</span>
-              </h1>
+          <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', paddingTop:'8vh', textAlign:'center', WebkitFontSmoothing:'antialiased', MozOsxFontSmoothing:'grayscale' }}>
+            {/* Tagline — outside frosted panel, near top */}
+            <div className="anim-1" style={{ marginBottom:'auto' }}>
+              <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(1.15rem,2.5vw,1.75rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.85)', textShadow:'0 2px 8px rgba(0,0,0,0.5)', margin:'0 0 0' }}>A gift that lasts a lifetime</p>
             </div>
 
-            {/* Frosted panel — compact */}
+            {/* Spacer to push frosted box down */}
+            <div style={{ height:'28vh' }} />
+
+            {/* Frosted panel */}
             <div style={{
-              background:'rgba(15,23,42,0.55)',
+              background:'rgba(240,235,220,0.72)',
               backdropFilter:'blur(20px)', WebkitBackdropFilter:'blur(20px)',
               borderRadius:'1.25rem',
-              border:'1px solid rgba(253,251,247,0.08)',
-              padding:'1.5rem 2rem',
-              boxShadow:'0 8px 32px rgba(0,0,0,0.3)',
-              display:'inline-block', maxWidth:'32rem',
+              border:'1px solid rgba(15,23,42,0.08)',
+              padding:'1.75rem 2.5rem 1.5rem',
+              boxShadow:'0 8px 32px rgba(0,0,0,0.15)',
+              display:'inline-block', maxWidth:'36rem',
             }}>
+              {/* Headline */}
+              <div className="anim-1" style={{ marginBottom:'1rem' }}>
+                <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.2, margin:0, textAlign:'center' }}>
+                  <span style={{ display:'block', fontSize:'clamp(2rem,5.5vw,3.5rem)', letterSpacing:'0.02em', color:'#0F172A', whiteSpace:'nowrap' }}>Get a Custom Song</span>
+                  <span style={{ display:'block', fontSize:'clamp(2rem,5.5vw,3.5rem)', letterSpacing:'0.02em', color:'#0F172A' }}>in 24 Hrs.</span>
+                </h1>
+              </div>
+
               {/* Body line */}
-              <p className="anim-2" style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.7, color:'rgba(253,251,247,0.75)', margin:'0 0 1.25rem', textAlign:'center' }}>
-                Let our producers &amp; musicians create an original studio-quality song for just $79.
+              <p className="anim-2" style={{ fontSize:'0.9rem', fontWeight:400, lineHeight:1.7, color:'rgba(15,23,42,0.65)', margin:'0 0 1.25rem', textAlign:'center' }}>
+                Let our professional musicians create an original<br/>studio-quality song for just $79.
               </p>
 
               {/* CTAs */}
               <div className="anim-3" style={{ display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
                 <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
-                <a href="#inspiration" style={{ fontSize:'0.9rem', fontWeight:400, color:'rgba(253,251,247,0.6)', textDecoration:'none', letterSpacing:'0.02em', transition:'color 0.2s' }}
+                <a href="#inspiration" style={{ fontSize:'0.9rem', fontWeight:500, color:'rgba(15,23,42,0.55)', textDecoration:'underline', textUnderlineOffset:'3px', letterSpacing:'0.02em', transition:'color 0.2s' }}
                   onMouseOver={e => e.target.style.color='#D4AF37'}
-                  onMouseOut={e => e.target.style.color='rgba(253,251,247,0.6)'}
-                >🎧 Listen to Examples</a>
+                  onMouseOut={e => e.target.style.color='rgba(15,23,42,0.55)'}
+                ><span style={{ filter:'brightness(0.4)' }}>🎧</span> Listen to Examples</a>
               </div>
             </div>{/* end frosted panel */}
 
             {/* Social proof — outside panel */}
-            <p className="anim-4" style={{ marginTop:'1.5rem', fontSize:'0.75rem', fontWeight:400, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(253,251,247,0.55)', textShadow:'0 2px 8px rgba(0,0,0,0.4)' }}>
+            <p className="anim-4" style={{ marginTop:'1.5rem', fontSize:'0.75rem', fontWeight:500, letterSpacing:'0.18em', textTransform:'uppercase', color:'#D4AF37', textShadow:'0 2px 8px rgba(0,0,0,0.4)' }}>
               Hundreds of Memories Created &nbsp;·&nbsp; ★★★★★ 4.9 / 5
             </p>
           </div>
 
           {/* Scroll cue */}
           <div style={{ position:'absolute', bottom:'2rem', left:0, right:0, display:'flex', flexDirection:'column', alignItems:'center', gap:'0.25rem' }}>
-            <span style={{ fontSize:'0.6rem', letterSpacing:'0.25em', textTransform:'uppercase', color:'rgba(253,251,247,0.25)' }}>Scroll</span>
             <div className="scroll-line" />
           </div>
         </section>
@@ -717,10 +724,9 @@
     /* ── How It Works ── */
     function HowItWorks({ onStart }) {
       return (
-        <section id="how-it-works" style={{ padding:'7rem 1.5rem', background:'#FDFBF7' }}>
+        <section id="how-it-works" style={{ padding:'3rem 1.5rem 5rem', background:'#FDFBF7' }}>
           <div style={{ maxWidth:'76rem', margin:'0 auto' }}>
-            <div style={{ textAlign:'center', marginBottom:'5rem' }}>
-              <span className="section-label" style={{ color:'rgba(212,175,55,0.75)' }}>How It Works</span>
+            <div style={{ textAlign:'center', marginBottom:'2.5rem' }}>
               <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#0F172A', margin:0 }}>
                 How It Works
               </h2>
@@ -773,23 +779,19 @@
     /* ── Inspiration / Testimonials ── */
     function Inspiration({ onStart }) {
       return (
-        <section id="inspiration" style={{ padding:'7rem 1.5rem', background:'#FDFBF7' }}>
+        <section id="inspiration" style={{ padding:'5rem 1.5rem', background:'#E8E4DD' }}>
           <div style={{ maxWidth:'72rem', margin:'0 auto' }}>
-            <div style={{ textAlign:'center', marginBottom:'4rem' }}>
-              <span className="section-label" style={{ color:'rgba(212,175,55,0.75)' }}>Inspiration</span>
+            <div style={{ textAlign:'center', marginBottom:'2.5rem' }}>
               <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#0F172A', margin:0 }}>
                 Songs That Stopped Time.
               </h2>
-              <p style={{ marginTop:'1.25rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.7)' }}>
-                These are the moments our artists live for.
-              </p>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'1.5rem' }}>
               {TESTIMONIALS.map((t,i) => (
                 <div key={i} style={{
                   display:'flex', flexDirection:'column',
                   background:'#fff', border:'1px solid rgba(15,23,42,0.08)',
-                  borderRadius:'1.25rem', padding:'2rem',
+                  borderRadius:'1.25rem', padding:'1.5rem',
                   boxShadow:'0 4px 24px rgba(0,0,0,0.06)',
                   transition:'box-shadow 0.3s, transform 0.3s',
                 }}
@@ -804,10 +806,9 @@
                     <span style={{ fontSize:'0.6rem', fontWeight:500, letterSpacing:'0.1em', textTransform:'uppercase', color:'rgba(15,23,42,0.45)', padding:'0.2rem 0.6rem', borderRadius:'9999px', border:'1px solid rgba(15,23,42,0.1)' }}>{t.genre}</span>
                   </div>
                   {/* Quote */}
-                  <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'3rem', lineHeight:1, color:'rgba(212,175,55,0.35)', marginBottom:'0.5rem' }}>"</p>
-                  <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic', fontSize:'1.05rem', lineHeight:1.65, color:'rgba(15,23,42,0.8)', marginBottom:'0.75rem', flex:1 }}>{t.quote}</p>
-                  {/* Attribution — right below quote */}
-                  <p style={{ fontSize:'0.875rem', fontWeight:600, color:'#0F172A', marginBottom:'1.25rem' }}>— {t.name}</p>
+                  <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontStyle:'italic', fontSize:'1.05rem', lineHeight:1.65, color:'rgba(15,23,42,0.8)', marginBottom:'0.5rem', flex:1 }}>{t.quote}</p>
+                  {/* Attribution */}
+                  <p style={{ fontSize:'0.875rem', fontWeight:600, color:'#0F172A', marginBottom:'1rem' }}>— {t.name}</p>
                   {/* Player row: play button + waveform + duration */}
                   <div style={{ display:'flex', alignItems:'center', gap:'0.75rem', marginBottom:'1rem' }}>
                     <button style={{
@@ -1156,14 +1157,14 @@
                 <div style={{ fontSize:'3rem', marginBottom:'1rem' }}>🎉</div>
                 <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.5rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.75rem' }}>You're All Set!</h3>
                 <p style={{ fontSize:'0.875rem', color:'rgba(253,251,247,0.6)', lineHeight:1.6 }}>
-                  Check your texts for your <span style={{color:'#D4AF37', fontWeight:600}}>$30 OFF</span> discount code.
+                  Check your texts for your <span style={{color:'#D4AF37', fontWeight:600}}>$20 OFF</span> discount code.
                 </p>
               </div>
             ) : phase === 'won' ? (
               <div style={{ textAlign:'center' }}>
                 <div style={{ fontSize:'2.5rem', marginBottom:'0.5rem' }}>🎊</div>
                 <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.75rem', fontWeight:700, color:'#FDFBF7', margin:'0 0 0.25rem' }}>
-                  Congratulations, you won <span style={{color:'#D4AF37'}}>$30 off!</span>
+                  Congratulations, you won <span style={{color:'#D4AF37'}}>$20 off!</span>
                 </h3>
                 <p style={{ fontSize:'0.9rem', color:'rgba(253,251,247,0.6)', marginTop:'0.75rem', marginBottom:'1.25rem' }}>
                   Enter your number to collect your discount via text
@@ -1172,6 +1173,7 @@
                   <input
                     type="tel" placeholder="(555) 123-4567" value={phone}
                     onChange={e => setPhone(e.target.value)}
+                    onKeyDown={e => { if (e.key === 'Enter' && phone.trim()) { e.preventDefault(); setPhase('submitted'); } }}
                     style={{
                       flex:1, padding:'0.75rem 1rem', borderRadius:'0.75rem',
                       border:'1px solid rgba(212,175,55,0.3)', background:'rgba(15,23,42,0.8)',
@@ -1209,6 +1211,7 @@
                     <input
                       type="email" placeholder="your@email.com" value={email}
                       onChange={e => setEmail(e.target.value)}
+                      onKeyDown={e => { if (e.key === 'Enter') handleSpin(); }}
                       style={{
                         width:'100%', padding:'0.75rem 1rem', borderRadius:'0.75rem',
                         border:'1px solid rgba(212,175,55,0.3)', background:'rgba(15,23,42,0.8)',
