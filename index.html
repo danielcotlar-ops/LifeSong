@@ -624,7 +624,7 @@
             </div>
 
             {/* Body bullets */}
-            <div className="anim-2" style={{ marginBottom:'2.5rem', display:'flex', flexDirection:'column', alignItems:'center', gap:'0.5rem' }}>
+            <div className="anim-2" style={{ marginBottom:'2.5rem', display:'inline-flex', flexDirection:'column', alignItems:'flex-start', gap:'0.5rem' }}>
               <p style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
                 <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> Professional producers and musicians
               </p>
@@ -642,7 +642,6 @@
             {/* CTAs */}
             <div className="anim-3" style={{ marginBottom:'2.5rem', display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
               <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
-              <button className="btn-ghost" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>🎧&nbsp; Listen to Examples</button>
             </div>
 
             {/* Social proof */}
@@ -780,6 +779,7 @@
               <p style={{ marginTop:'1.25rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.7)' }}>
                 These are the moments our artists live for.
               </p>
+              <button className="btn-ghost" style={{ marginTop:'1.5rem', padding:'0.75rem 1.5rem', fontSize:'0.9rem', color:'#0F172A', borderColor:'rgba(15,23,42,0.25)' }}>🎧&nbsp; Listen to Examples</button>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'1.5rem' }}>
               {TESTIMONIALS.map((t,i) => (
