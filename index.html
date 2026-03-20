@@ -615,49 +615,43 @@
 
           {/* Content */}
           <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', textAlign:'center', WebkitFontSmoothing:'antialiased', MozOsxFontSmoothing:'grayscale' }}>
-            <div style={{
-              background:'rgba(15,23,42,0.55)',
-              backdropFilter:'blur(20px)', WebkitBackdropFilter:'blur(20px)',
-              borderRadius:'1.5rem',
-              border:'1px solid rgba(253,251,247,0.08)',
-              padding:'3rem 2.5rem 2.5rem',
-              boxShadow:'0 8px 32px rgba(0,0,0,0.3)',
-            }}>
-            {/* Headline */}
-            <div className="anim-1" style={{ marginBottom:'2.5rem' }}>
-              <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.2, margin:0, textAlign:'center', textShadow:'0 1px 3px rgba(0,0,0,0.2)' }}>
-                <span style={{ display:'block', fontSize:'clamp(1.25rem,3vw,2rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.8)', marginBottom:'1.5rem', textShadow:'0 1px 3px rgba(0,0,0,0.2)' }}>A gift that lasts a lifetime</span>
-                <span className="text-gold-gradient" style={{ display:'block', fontSize:'clamp(1.75rem,5vw,3.5rem)', letterSpacing:'0.02em' }}>Get a Custom Song in 24 Hours</span>
+            {/* Headline — above frosted panel */}
+            <div className="anim-1" style={{ marginBottom:'1.5rem' }}>
+              <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.2, margin:0, textAlign:'center', textShadow:'0 2px 8px rgba(0,0,0,0.4)' }}>
+                <span style={{ display:'block', fontSize:'clamp(1.25rem,3vw,2rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.8)', marginBottom:'1rem', textShadow:'0 2px 8px rgba(0,0,0,0.4)' }}>A gift that lasts a lifetime</span>
+                <span className="text-gold-gradient" style={{ display:'block', fontSize:'clamp(1.75rem,5vw,3.5rem)', letterSpacing:'0.02em' }}>Get a Custom Song in 24 Hrs.</span>
               </h1>
             </div>
 
-            {/* Body bullets */}
-            <div className="anim-2" style={{ marginBottom:'2.5rem', display:'inline-flex', flexDirection:'column', alignItems:'flex-start', gap:'0.5rem' }}>
-              <p style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
-                <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> Professional producers and musicians
+            {/* Frosted panel — compact */}
+            <div style={{
+              background:'rgba(15,23,42,0.55)',
+              backdropFilter:'blur(20px)', WebkitBackdropFilter:'blur(20px)',
+              borderRadius:'1.25rem',
+              border:'1px solid rgba(253,251,247,0.08)',
+              padding:'1.5rem 2rem',
+              boxShadow:'0 8px 32px rgba(0,0,0,0.3)',
+              display:'inline-block', maxWidth:'32rem',
+            }}>
+              {/* Body line */}
+              <p className="anim-2" style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.7, color:'rgba(253,251,247,0.75)', margin:'0 0 1.25rem', textAlign:'center' }}>
+                Let our producers &amp; musicians create an original studio-quality song for just $79.
               </p>
-              <p style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
-                <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> Original studio-quality music for any occasion
-              </p>
-              <p style={{ fontSize:'0.95rem', fontWeight:300, lineHeight:1.6, color:'rgba(253,251,247,0.65)', margin:0, display:'flex', alignItems:'center', gap:'0.5rem', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
-                <span style={{ color:'#D4AF37', fontSize:'0.7rem' }}>★</span> Starting at just $79
-              </p>
-            </div>
 
-            {/* CTAs */}
-            <div className="anim-3" style={{ marginBottom:'2.5rem', display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
-              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
-              <a href="#inspiration" style={{ fontSize:'0.9rem', fontWeight:400, color:'rgba(253,251,247,0.6)', textDecoration:'none', letterSpacing:'0.02em', transition:'color 0.2s' }}
-                onMouseOver={e => e.target.style.color='#D4AF37'}
-                onMouseOut={e => e.target.style.color='rgba(253,251,247,0.6)'}
-              >🎧 Listen to Examples</a>
-            </div>
+              {/* CTAs */}
+              <div className="anim-3" style={{ display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
+                <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
+                <a href="#inspiration" style={{ fontSize:'0.9rem', fontWeight:400, color:'rgba(253,251,247,0.6)', textDecoration:'none', letterSpacing:'0.02em', transition:'color 0.2s' }}
+                  onMouseOver={e => e.target.style.color='#D4AF37'}
+                  onMouseOut={e => e.target.style.color='rgba(253,251,247,0.6)'}
+                >🎧 Listen to Examples</a>
+              </div>
+            </div>{/* end frosted panel */}
 
-            {/* Social proof */}
-            <p className="anim-4" style={{ marginTop:'1rem', fontSize:'0.75rem', fontWeight:400, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(253,251,247,0.55)', textShadow:'0 1px 2px rgba(0,0,0,0.15)' }}>
+            {/* Social proof — outside panel */}
+            <p className="anim-4" style={{ marginTop:'1.5rem', fontSize:'0.75rem', fontWeight:400, letterSpacing:'0.18em', textTransform:'uppercase', color:'rgba(253,251,247,0.55)', textShadow:'0 2px 8px rgba(0,0,0,0.4)' }}>
               Hundreds of Memories Created &nbsp;·&nbsp; ★★★★★ 4.9 / 5
             </p>
-            </div>{/* end frosted panel */}
           </div>
 
           {/* Scroll cue */}
