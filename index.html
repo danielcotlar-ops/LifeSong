@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>LifeSong — Custom Songs for Life's Greatest Moments</title>
   <meta name="description" content="Give the gift of a custom song written just for them. Studio-quality delivery in 24 hours." />
 
@@ -41,7 +41,7 @@
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       background-color: #0F172A;
       color: #FDFBF7;
@@ -473,9 +473,9 @@
             aria-live="polite"
             style={{
               position:'relative', display:'inline-block',
-              overflow:'visible', verticalAlign:'baseline',
+              overflow:'hidden', verticalAlign:'baseline',
               height:'1.3em', minWidth: width || 'auto', width: width || 'auto',
-              clipPath:'inset(-5% -8% -5% -8%)',
+              maxWidth:'90vw',
             }}
           >
             {TICKER_WORDS.map((word,i) => {
@@ -562,7 +562,7 @@
                   {l.label}
                 </a>
               ))}
-              <a href="#" onClick={e=>{e.preventDefault();setOpen(false);onStart&&onStart();}} className="btn-gold" style={{ marginTop:'1rem', textAlign:'center' }}>Start My Song</a>
+              <a href="#" onClick={e=>{e.preventDefault();setOpen(false);onStart&&onStart();}} className="btn-gold" style={{ marginTop:'1rem', textAlign:'center', padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</a>
             </div>
           </div>
         </header>
@@ -621,7 +621,7 @@
           {/* fade removed */}
 
           {/* Content */}
-          <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', paddingTop:'8vh', textAlign:'center', display:'flex', flexDirection:'column', alignItems:'center', WebkitFontSmoothing:'antialiased', MozOsxFontSmoothing:'grayscale' }}>
+          <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', paddingTop:'11vh', textAlign:'center', display:'flex', flexDirection:'column', alignItems:'center', WebkitFontSmoothing:'antialiased', MozOsxFontSmoothing:'grayscale' }}>
             {/* Tagline — outside frosted panel, near top */}
             <div className="anim-1" style={{ marginBottom:'auto' }}>
               <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(1.15rem,2.5vw,1.75rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.85)', textShadow:'0 2px 8px rgba(0,0,0,0.5)', margin:'0 0 0' }}>A gift that lasts a lifetime</p>
@@ -638,7 +638,7 @@
               border:'1px solid rgba(15,23,42,0.08)',
               padding:'1.75rem 2.5rem 1.5rem',
               boxShadow:'0 8px 32px rgba(0,0,0,0.15)',
-              display:'block', maxWidth:'36rem', margin:'0 auto', width:'100%', boxSizing:'border-box',
+              display:'block', maxWidth:'min(36rem, calc(100vw - 2rem))', margin:'0 auto', width:'100%', boxSizing:'border-box',
             }}>
               {/* Headline */}
               <div className="anim-1" style={{ marginBottom:'1rem' }}>
@@ -650,16 +650,16 @@
 
               {/* Body line */}
               <p className="anim-2" style={{ fontSize:'0.9rem', fontWeight:400, lineHeight:1.7, color:'rgba(15,23,42,0.65)', margin:'0 0 1.25rem', textAlign:'center' }}>
-                Let our professional musicians create an original<br/>studio-quality song for just $79.
+                Let our professional musicians create an<br/>original studio-quality song for just $79.
               </p>
 
               {/* CTAs */}
               <div className="anim-3" style={{ display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
                 <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
-                <a href="#inspiration" style={{ fontSize:'0.9rem', fontWeight:500, color:'rgba(15,23,42,0.55)', textDecoration:'underline', textUnderlineOffset:'3px', letterSpacing:'0.02em', transition:'color 0.2s' }}
+                <a href="#inspiration" style={{ fontSize:'0.9rem', fontWeight:500, color:'#3a3a3a', textDecoration:'underline', textUnderlineOffset:'3px', letterSpacing:'0.02em', transition:'color 0.2s' }}
                   onMouseOver={e => e.target.style.color='#D4AF37'}
-                  onMouseOut={e => e.target.style.color='rgba(15,23,42,0.55)'}
-                ><span style={{ filter:'brightness(0.4)' }}>🎧</span> Listen to Examples</a>
+                  onMouseOut={e => e.target.style.color='#3a3a3a'}
+                >🎧 Listen to Examples</a>
               </div>
             </div>{/* end frosted panel */}
 
@@ -768,7 +768,7 @@
               ))}
             </div>
             <div style={{ marginTop:'4rem', display:'flex', justifyContent:'center' }}>
-              <a href="#" onClick={e=>{e.preventDefault();onStart&&onStart();}} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'0.9375rem' }}>Start My Song →</a>
+              <a href="#" onClick={e=>{e.preventDefault();onStart&&onStart();}} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</a>
             </div>
           </div>
         </section>
@@ -848,7 +848,7 @@
             </div>
             {/* CTA */}
             <div style={{ marginTop:'4rem', display:'flex', justifyContent:'center' }}>
-              <button onClick={onStart} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'0.9375rem' }}>Start My Song →</button>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
             </div>
           </div>
         </section>
@@ -920,7 +920,7 @@
             </p>
             {/* CTA */}
             <div style={{ marginTop:'3rem', display:'flex', justifyContent:'center' }}>
-              <button onClick={onStart} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'0.9375rem' }}>Start My Song →</button>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
             </div>
           </div>
         </section>
@@ -963,7 +963,7 @@
             })}
             {/* CTA */}
             <div style={{ marginTop:'3rem', display:'flex', justifyContent:'center' }}>
-              <button onClick={onStart} className="btn-gold" style={{ padding:'0.875rem 2rem', fontSize:'0.9375rem' }}>Start My Song →</button>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
             </div>
           </div>
         </section>
@@ -989,7 +989,7 @@
                 Join hundreds of happy customers who gave the one gift that can never be forgotten, returned, or replaced.
               </p>
               <div style={{ display:'flex', flexWrap:'wrap', alignItems:'center', justifyContent:'center', gap:'1rem' }}>
-                <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2.5rem', fontSize:'1rem' }}>Start My Song →</button>
+                <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
                 <p style={{ fontSize:'0.75rem', fontWeight:300, color:'rgba(253,251,247,0.3)', margin:0 }}>24-hour delivery</p>
               </div>
               {/* Decorative staff */}
