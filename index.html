@@ -1001,10 +1001,10 @@
             <a href="#" style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.125rem', letterSpacing:'0.05em', color:'#D4AF37', textDecoration:'none' }}>LifeSong</a>
             <p style={{ fontSize:'0.75rem', fontWeight:300, color:'rgba(253,251,247,0.25)', margin:0 }}>© {new Date().getFullYear()} LifeSong Inc. All rights reserved.</p>
             <div style={{ display:'flex', gap:'1.5rem' }}>
-              {['Privacy','Terms','Contact'].map(l=>(
-                <a key={l} href="#" style={{ fontSize:'0.75rem', fontWeight:300, color:'rgba(253,251,247,0.3)', textDecoration:'none' }}
+              {[{label:'Privacy',href:'#privacy'},{label:'Terms',href:'#terms'},{label:'Contact',href:'mailto:makehappy@lifesong.press'}].map(l=>(
+                <a key={l.label} href={l.href} style={{ fontSize:'0.75rem', fontWeight:300, color:'rgba(253,251,247,0.3)', textDecoration:'none' }}
                   onMouseOver={e=>e.target.style.color='rgba(253,251,247,0.7)'} onMouseOut={e=>e.target.style.color='rgba(253,251,247,0.3)'}>
-                  {l}
+                  {l.label}
                 </a>
               ))}
             </div>
@@ -1619,19 +1619,124 @@
       );
     }
 
+    /* ── Privacy Policy Page ── */
+    function PrivacyPolicy() {
+      return (
+        <div style={{ minHeight:'100vh', background:'#FDFBF7', color:'#0F172A' }}>
+          <div style={{ maxWidth:'48rem', margin:'0 auto', padding:'4rem 1.5rem' }}>
+            <a href="#" onClick={e=>{e.preventDefault();window.location.hash='';}} style={{ fontSize:'0.85rem', color:'#D4AF37', textDecoration:'none', display:'inline-block', marginBottom:'2rem' }}>← Back to LifeSong</a>
+            <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'2.5rem', fontWeight:700, color:'#0F172A', margin:'0 0 0.5rem' }}>Privacy Policy</h1>
+            <p style={{ fontSize:'0.8rem', color:'rgba(15,23,42,0.45)', marginBottom:'3rem' }}>Last updated: March 2026</p>
+
+            <div style={{ fontSize:'0.95rem', lineHeight:1.85, color:'rgba(15,23,42,0.75)' }}>
+              <p style={{ marginBottom:'1.5rem' }}>At LifeSong, we understand that the stories, memories, and personal details you share with us are deeply meaningful. This policy explains how we collect, use, and protect your information.</p>
+
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>Information We Collect</h2>
+              <p style={{ marginBottom:'1rem' }}>We collect information you provide directly through the LifeSong Intake Form, including:</p>
+              <ul style={{ paddingLeft:'1.5rem', marginBottom:'1.5rem' }}>
+                <li style={{ marginBottom:'0.5rem' }}>Names of recipients and your relationship to them</li>
+                <li style={{ marginBottom:'0.5rem' }}>Personal stories, memories, and inside jokes you share for songwriting</li>
+                <li style={{ marginBottom:'0.5rem' }}>Musical preferences including occasion, genre, tone, and energy level</li>
+                <li style={{ marginBottom:'0.5rem' }}>Contact information (email, phone number)</li>
+              </ul>
+
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>How We Use Your Information</h2>
+              <p style={{ marginBottom:'1rem' }}>Your information is used <strong>exclusively</strong> for the creation of your custom song by our professional songwriting team. Specifically:</p>
+              <ul style={{ paddingLeft:'1.5rem', marginBottom:'1.5rem' }}>
+                <li style={{ marginBottom:'0.5rem' }}>Your stories and memories are shared only with the assigned songwriter and producer</li>
+                <li style={{ marginBottom:'0.5rem' }}>Your contact information is used to deliver your song and communicate about your order</li>
+                <li style={{ marginBottom:'0.5rem' }}><strong>We do not sell your personal stories to third parties. Ever.</strong></li>
+              </ul>
+
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>Data Retention</h2>
+              <p style={{ marginBottom:'1.5rem' }}>We retain your stories and the final song files (MP3 and WAV) so you can access them in the future. You may request deletion of all your personal data at any time by emailing <a href="mailto:makehappy@lifesong.press" style={{ color:'#D4AF37', textDecoration:'underline' }}>makehappy@lifesong.press</a>.</p>
+
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>Third-Party Services</h2>
+              <p style={{ marginBottom:'1rem' }}>We use trusted third-party services to process payments and deliver your song:</p>
+              <ul style={{ paddingLeft:'1.5rem', marginBottom:'1.5rem' }}>
+                <li style={{ marginBottom:'0.5rem' }}>Payment processing is handled by Stripe and/or PayPal. <strong>Your financial data never touches our servers.</strong></li>
+                <li style={{ marginBottom:'0.5rem' }}>We use professional distribution tools to deliver your song securely</li>
+                <li style={{ marginBottom:'0.5rem' }}>We may use analytics tools to improve the site experience</li>
+              </ul>
+
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>Contact Us</h2>
+              <p>If you have questions about this privacy policy or wish to request data deletion, please email us at <a href="mailto:makehappy@lifesong.press" style={{ color:'#D4AF37', textDecoration:'underline' }}>makehappy@lifesong.press</a>.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── Terms of Service Page ── */
+    function TermsOfService() {
+      return (
+        <div style={{ minHeight:'100vh', background:'#FDFBF7', color:'#0F172A' }}>
+          <div style={{ maxWidth:'48rem', margin:'0 auto', padding:'4rem 1.5rem' }}>
+            <a href="#" onClick={e=>{e.preventDefault();window.location.hash='';}} style={{ fontSize:'0.85rem', color:'#D4AF37', textDecoration:'none', display:'inline-block', marginBottom:'2rem' }}>← Back to LifeSong</a>
+            <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'2.5rem', fontWeight:700, color:'#0F172A', margin:'0 0 0.5rem' }}>Terms of Service</h1>
+            <p style={{ fontSize:'0.8rem', color:'rgba(15,23,42,0.45)', marginBottom:'3rem' }}>Last updated: March 2026</p>
+
+            <div style={{ fontSize:'0.95rem', lineHeight:1.85, color:'rgba(15,23,42,0.75)' }}>
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>The Service</h2>
+              <p style={{ marginBottom:'1.5rem' }}>LifeSong provides a custom, human-composed musical recording based on user-provided personal stories, memories, and preferences (your "Golden Memories"). Each song is an original work created by professional musicians and producers.</p>
+
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>Ownership & Rights</h2>
+              <p style={{ marginBottom:'1rem' }}>Upon delivery and full payment, you (the customer) receive a <strong>perpetual, royalty-free license for personal use</strong>, including:</p>
+              <ul style={{ paddingLeft:'1.5rem', marginBottom:'1rem' }}>
+                <li style={{ marginBottom:'0.5rem' }}>Sharing with family and friends</li>
+                <li style={{ marginBottom:'0.5rem' }}>Posting on social media</li>
+                <li style={{ marginBottom:'0.5rem' }}>Playing at personal events and celebrations</li>
+              </ul>
+              <p style={{ marginBottom:'1.5rem' }}>LifeSong and the Artist retain the underlying copyright and the right to use the song for promotional purposes (e.g., sample clips on our website), unless you opt out by emailing <a href="mailto:makehappy@lifesong.press" style={{ color:'#D4AF37', textDecoration:'underline' }}>makehappy@lifesong.press</a>.</p>
+
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>24-Hour Delivery Guarantee</h2>
+              <p style={{ marginBottom:'1.5rem' }}>We guarantee delivery of the first draft within 24 hours of intake form completion (or under 12 hours for Accelerated Delivery). Delays due to incomplete intake forms or unresponsive customers are not the responsibility of LifeSong.</p>
+
+              <div style={{ background:'rgba(212,175,55,0.08)', border:'1px solid rgba(212,175,55,0.25)', borderRadius:'0.75rem', padding:'1.5rem 1.75rem', margin:'2.5rem 0' }}>
+                <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'0 0 1rem' }}>Revisions & Refunds</h2>
+                <p style={{ marginBottom:'1rem' }}>Because each song is a custom art piece, <strong>we do not offer full refunds once the artist has begun work.</strong></p>
+                <ul style={{ paddingLeft:'1.5rem', marginBottom:'1rem' }}>
+                  <li style={{ marginBottom:'0.5rem' }}>The <strong>Basic</strong> plan does not include revisions</li>
+                  <li style={{ marginBottom:'0.5rem' }}>The <strong>Plus</strong> plan includes one revision</li>
+                  <li style={{ marginBottom:'0.5rem' }}>The <strong>Premium</strong> plan includes up to two revisions</li>
+                </ul>
+                <p style={{ marginBottom:'0' }}>We also offer a money-back satisfaction guarantee. Email <a href="mailto:makehappy@lifesong.press" style={{ color:'#D4AF37', textDecoration:'underline' }}>makehappy@lifesong.press</a> with your name, email, phone number, the song file, and a description of the issue.</p>
+              </div>
+
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>Content Restrictions</h2>
+              <p style={{ marginBottom:'1.5rem' }}>We reserve the right to refuse service for requests involving hate speech, illegal acts, harassment, or content that targets or demeans individuals or groups. In such cases, a full refund will be provided.</p>
+
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.35rem', fontWeight:600, color:'#0F172A', margin:'2.5rem 0 1rem' }}>Contact Us</h2>
+              <p>For questions about these terms, please email <a href="mailto:makehappy@lifesong.press" style={{ color:'#D4AF37', textDecoration:'underline' }}>makehappy@lifesong.press</a>.</p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     /* ── App ── */
     function App() {
       const [showIntake, setShowIntake] = useState(false);
+      const [page, setPage] = useState(null);
 
       useEffect(() => {
-        if (window.location.hash === '#start') setShowIntake(true);
-        const onHash = () => { if (window.location.hash === '#start') setShowIntake(true); };
-        window.addEventListener('hashchange', onHash);
-        return () => window.removeEventListener('hashchange', onHash);
+        const checkHash = () => {
+          const hash = window.location.hash;
+          if (hash === '#start') { setShowIntake(true); setPage(null); }
+          else if (hash === '#privacy') { setPage('privacy'); setShowIntake(false); }
+          else if (hash === '#terms') { setPage('terms'); setShowIntake(false); }
+          else { setPage(null); }
+        };
+        checkHash();
+        window.addEventListener('hashchange', checkHash);
+        return () => window.removeEventListener('hashchange', checkHash);
       }, []);
 
       const openIntake = () => setShowIntake(true);
       const closeIntake = () => { setShowIntake(false); window.location.hash = ''; };
+
+      if (page === 'privacy') return <PrivacyPolicy />;
+      if (page === 'terms') return <TermsOfService />;
 
       return (
         <div style={{ minHeight:'100vh', background:'#0F172A' }}>
