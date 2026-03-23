@@ -302,7 +302,7 @@
         body: 'Share those favorite memories, inside jokes, or feelings. We\u2019ll write the perfect lyrics and send your song in 24 hrs.',
       },
     ];
-    const GENRES = ['Folk', 'Pop', 'Country', 'R&B', 'Rock', 'Hip-Hop', 'Jazz', 'Classical', 'Blues', 'Indie', 'Soul', 'Reggae', 'Latin', 'Electronic'];
+    const GENRES = ['Folk', 'Pop', 'Rock', 'Country', 'Blues', 'And More'];
     const ARTISTS = [
       { name:'Maya R.', genre:'Nashville Folk', bio:'Specializes in raw, emotional storytelling.', songs:'3,200+',
         photo:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face',
@@ -677,10 +677,10 @@
     }
 
     /* ── Occasion Pills ── */
-    const OCCASIONS = ['Birthday', 'Anniversary', "Mother's Day", 'Engagement', 'Graduation', 'Wedding', 'Just Because', 'And More'];
+    const OCCASIONS = ['Birthday', 'Anniversary', "Mother's Day", 'Graduation', 'Wedding', 'And More'];
     function OccasionPills({ onStart }) {
       return (
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(4, auto)', gap:'0.4rem', justifyContent:'center', marginTop:'0.75rem' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(3, auto)', gap:'0.4rem', justifyContent:'center', marginTop:'0.75rem' }}>
           {OCCASIONS.map(o => (
             <a key={o} href="#" onClick={e=>{e.preventDefault();onStart&&onStart();}} style={{
               padding:'0.35rem 0.75rem', borderRadius:'9999px',
@@ -697,32 +697,22 @@
       );
     }
 
-    /* ── Genre Scroller ── */
+    /* ── Genre Pills ── */
     function GenreScroller() {
-      const scrollRef = useRef(null);
       return (
-        <div style={{ marginTop:'1rem', position:'relative', maxWidth:'100%', overflow:'hidden' }}>
-          <div ref={scrollRef} className="genre-scroll" style={{
-            display:'flex', gap:'0.5rem', overflowX:'auto', padding:'0.25rem 0 0.5rem',
-            scrollbarWidth:'none', msOverflowStyle:'none',
-            WebkitOverflowScrolling:'touch',
-          }}>
-            {GENRES.map(g => (
-              <span key={g} style={{
-                flexShrink:0, padding:'0.4rem 0.85rem', borderRadius:'9999px',
-                border:'1px solid rgba(212,175,55,0.35)', background:'rgba(212,175,55,0.08)',
-                fontSize:'0.7rem', fontWeight:500, letterSpacing:'0.05em',
-                color:'#B8962E', whiteSpace:'nowrap', cursor:'pointer',
-                transition:'background 0.2s, border-color 0.2s, color 0.2s',
-                display:'inline-flex', alignItems:'center', gap:'0.3rem',
-              }}
-              onMouseOver={e => { e.currentTarget.style.background='rgba(212,175,55,0.2)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.7)'; e.currentTarget.style.color='#96780A'; }}
-              onMouseOut={e => { e.currentTarget.style.background='rgba(212,175,55,0.08)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.35)'; e.currentTarget.style.color='#B8962E'; }}
-              ><svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" style={{flexShrink:0}}><polygon points="1,0 7,4 1,8"/></svg>{g}</span>
-            ))}
-          </div>
-          {/* Fade edges */}
-          <div style={{ position:'absolute', top:0, right:0, bottom:'0.5rem', width:'3rem', background:'linear-gradient(to left,#FDFBF7,transparent)', pointerEvents:'none' }} />
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(3, auto)', gap:'0.4rem', justifyContent:'center', marginTop:'0.75rem' }}>
+          {GENRES.map(g => (
+            <span key={g} style={{
+              padding:'0.35rem 0.75rem', borderRadius:'9999px',
+              border:'1px solid rgba(212,175,55,0.35)', background:'rgba(212,175,55,0.08)',
+              fontSize:'0.68rem', fontWeight:500, letterSpacing:'0.04em',
+              color:'#B8962E', whiteSpace:'nowrap', cursor:'pointer', textAlign:'center',
+              transition:'background 0.2s, border-color 0.2s, color 0.2s',
+            }}
+            onMouseOver={e => { e.currentTarget.style.background='rgba(212,175,55,0.2)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.7)'; e.currentTarget.style.color='#96780A'; }}
+            onMouseOut={e => { e.currentTarget.style.background='rgba(212,175,55,0.08)'; e.currentTarget.style.borderColor='rgba(212,175,55,0.35)'; e.currentTarget.style.color='#B8962E'; }}
+            >{g}</span>
+          ))}
         </div>
       );
     }
