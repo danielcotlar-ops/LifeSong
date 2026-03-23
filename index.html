@@ -250,7 +250,7 @@
     }
 
     /* ── FAQ ── */
-    .faq-item { border-bottom: 1px solid rgba(212,175,55,0.12); }
+    .faq-item { border-bottom: 1px solid rgba(15,23,42,0.1); }
     .faq-answer {
       overflow: hidden;
       transition: max-height 0.35s ease;
@@ -259,6 +259,12 @@
     .faq-answer.open { max-height: 400px; }
 
     /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .step-circle-desktop { display: none !important; }
+      .step-title-desktop { display: none !important; }
+      .step-inline-header { display: flex !important; }
+      .step-card { align-items: flex-start !important; text-align: left !important; }
+    }
     @media (max-width: 640px) {
       .btn-gold, .btn-ghost { width: 100%; justify-content: center; }
     }
@@ -294,7 +300,7 @@
       },
       {
         num: '03', title: 'Personalize Your Song',
-        body: 'Tell us those favorite memories, inside jokes, or feelings so we can use them for the perfect lyrics. We\u2019ll send you the song 24 hours later \u2014 or 12 hours or less if you choose Accelerated Delivery.',
+        body: 'Share those favorite memories, inside jokes, or feelings so we write the perfect lyrics. We\u2019ll send your song in 24 hrs \u2014 or under 12 hours if you choose Accelerated Delivery.',
       },
     ];
     const GENRES = ['Folk', 'Pop', 'Country', 'R&B', 'Rock', 'Hip-Hop', 'Jazz', 'Classical', 'Blues', 'Indie', 'Soul', 'Reggae', 'Latin', 'Electronic'];
@@ -515,8 +521,8 @@
           borderBottom: scrolled ? '1px solid rgba(212,175,55,0.12)' : '1px solid transparent',
           transition:'background 0.4s,backdrop-filter 0.4s,border-color 0.4s',
         }}>
-          <div style={{ maxWidth:'80rem', margin:'0 auto', padding:'1rem 1.5rem', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
-            <a href="#" style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.25rem', letterSpacing:'0.05em', color:'#D4AF37', textDecoration:'none' }}>
+          <div style={{ maxWidth:'72rem', margin:'0 auto', padding:'1rem 1.5rem', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+            <a href="#" style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'2.15rem', letterSpacing:'0.05em', color:'#D4AF37', textDecoration:'none', fontWeight:600 }}>
               LifeSong
             </a>
             {/* Desktop */}
@@ -614,7 +620,7 @@
           {/* fade removed */}
 
           {/* Content */}
-          <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', paddingTop:'8vh', textAlign:'center', WebkitFontSmoothing:'antialiased', MozOsxFontSmoothing:'grayscale' }}>
+          <div style={{ position:'relative', zIndex:10, maxWidth:'56rem', margin:'0 auto', padding:'0 1.5rem', paddingTop:'8vh', textAlign:'center', display:'flex', flexDirection:'column', alignItems:'center', WebkitFontSmoothing:'antialiased', MozOsxFontSmoothing:'grayscale' }}>
             {/* Tagline — outside frosted panel, near top */}
             <div className="anim-1" style={{ marginBottom:'auto' }}>
               <p style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(1.15rem,2.5vw,1.75rem)', fontWeight:400, letterSpacing:'0.02em', color:'rgba(253,251,247,0.85)', textShadow:'0 2px 8px rgba(0,0,0,0.5)', margin:'0 0 0' }}>A gift that lasts a lifetime</p>
@@ -731,10 +737,11 @@
                 How It Works
               </h2>
             </div>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))', gap:'3rem 1.5rem', position:'relative' }}>
+            <div className="steps-grid" style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))', gap:'3rem 1.5rem', position:'relative' }}>
               {STEPS.map((s,i) => (
-                <div key={i} style={{ display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', overflow:'hidden' }}>
-                  <div style={{ position:'relative', marginBottom:'1.5rem' }}>
+                <div key={i} className="step-card" style={{ display:'flex', flexDirection:'column', alignItems:'center', textAlign:'center', overflow:'hidden' }}>
+                  {/* Desktop: circle number above title */}
+                  <div className="step-circle-desktop" style={{ position:'relative', marginBottom:'1.5rem' }}>
                     <div style={{
                       width:'5rem', height:'5rem', borderRadius:'50%',
                       background:'radial-gradient(circle,rgba(212,175,55,0.08) 0%,transparent 70%)',
@@ -746,7 +753,13 @@
                       <span className="step-num">{s.num}</span>
                     </div>
                   </div>
-                  <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.25rem', fontWeight:600, color:'#0F172A', margin:'0 0 0.75rem' }}>{s.title}</h3>
+                  {/* Mobile: inline number + title */}
+                  <div className="step-inline-header" style={{ display:'none', alignItems:'center', gap:'0.75rem', marginBottom:'0.5rem' }}>
+                    <span style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.1rem', fontWeight:700, color:'#D4AF37' }}>{s.num}</span>
+                    <h3 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.15rem', fontWeight:600, color:'#0F172A', margin:0 }}>{s.title}</h3>
+                  </div>
+                  {/* Desktop title */}
+                  <h3 className="step-title-desktop" style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.25rem', fontWeight:600, color:'#0F172A', margin:'0 0 0.75rem' }}>{s.title}</h3>
                   <p style={{ fontSize:'0.85rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.7)', maxWidth:'18rem', margin:'0 auto' }}>{s.body}</p>
                   {s.hasOccasionPills && <OccasionPills onStart={onStart} />}
                   {s.hasGenreScroller && <GenreScroller />}
@@ -779,7 +792,7 @@
     /* ── Inspiration / Testimonials ── */
     function Inspiration({ onStart }) {
       return (
-        <section id="inspiration" style={{ padding:'5rem 1.5rem', background:'#E8E4DD' }}>
+        <section id="inspiration" style={{ padding:'3rem 1.5rem 5rem', background:'#E8E4DD' }}>
           <div style={{ maxWidth:'72rem', margin:'0 auto' }}>
             <div style={{ textAlign:'center', marginBottom:'2.5rem' }}>
               <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#0F172A', margin:0 }}>
@@ -844,12 +857,11 @@
     /* ── Artists ── */
     function Artists({ onStart }) {
       return (
-        <section id="artists" style={{ padding:'7rem 1.5rem' }}>
+        <section id="artists" style={{ padding:'3rem 1.5rem 5rem' }}>
           <div style={{ maxWidth:'72rem', margin:'0 auto' }}>
-            <div style={{ textAlign:'center', marginBottom:'4rem' }}>
-              <span className="section-label">The Talent</span>
+            <div style={{ textAlign:'center', marginBottom:'2.5rem' }}>
               <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#FDFBF7', margin:0 }}>
-                Meet the Artists.
+                Meet the Artists
               </h2>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))', gap:'1.5rem' }}>
@@ -918,11 +930,10 @@
     function FAQ({ onStart }) {
       const [openIdx, setOpenIdx] = useState(null);
       return (
-        <section id="faq" style={{ padding:'7rem 1.5rem' }}>
+        <section id="faq" style={{ padding:'3rem 1.5rem 5rem', background:'#FDFBF7' }}>
           <div style={{ maxWidth:'40rem', margin:'0 auto' }}>
-            <div style={{ textAlign:'center', marginBottom:'4rem' }}>
-              <span className="section-label">Questions</span>
-              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#FDFBF7', margin:0 }}>Frequently Asked</h2>
+            <div style={{ textAlign:'center', marginBottom:'2.5rem' }}>
+              <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#0F172A', margin:0 }}>Frequently Asked Questions</h2>
             </div>
             {FAQS.map((faq,i) => {
               const isOpen = openIdx === i;
@@ -940,11 +951,11 @@
                     onClick={()=>setOpenIdx(isOpen?null:i)}
                     style={{ width:'100%', background:'none', border:'none', cursor:'pointer', display:'flex', alignItems:'flex-start', justifyContent:'space-between', gap:'1.5rem', padding:'1.5rem 0', textAlign:'left' }}
                   >
-                    <span style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.125rem', color:'rgba(253,251,247,0.85)', lineHeight:1.4 }}>{faq.q}</span>
-                    <span style={{ flexShrink:0, marginTop:'0.125rem', fontSize:'1.25rem', color:'rgba(212,175,55,0.6)', transition:'transform 0.3s', transform: isOpen?'rotate(45deg)':'rotate(0deg)' }}>+</span>
+                    <span style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.125rem', color:'#0F172A', lineHeight:1.4 }}>{faq.q}</span>
+                    <span style={{ flexShrink:0, marginTop:'0.125rem', fontSize:'1.25rem', color:'#D4AF37', transition:'transform 0.3s', transform: isOpen?'rotate(45deg)':'rotate(0deg)' }}>+</span>
                   </button>
                   <div className={`faq-answer ${isOpen?'open':''}`}>
-                    <p style={{ paddingBottom:'1.5rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.75, color:'rgba(253,251,247,0.5)' }}>{renderAnswer(faq.a)}</p>
+                    <p style={{ paddingBottom:'1.5rem', fontSize:'0.875rem', fontWeight:300, lineHeight:1.75, color:'rgba(15,23,42,0.7)' }}>{renderAnswer(faq.a)}</p>
                   </div>
                 </div>
               );
