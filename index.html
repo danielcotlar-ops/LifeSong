@@ -302,7 +302,7 @@
         body: 'Share those favorite memories, inside jokes, or feelings. We\u2019ll write the perfect lyrics and send your song in 24 hrs.',
       },
     ];
-    const GENRES = ['Folk', 'Pop', 'Rock', 'Country', 'Blues', 'And More'];
+    const GENRES = ['Folk', 'Pop', 'Rock', 'Country', 'Soul', 'R&B', 'Blues', 'And More'];
     const ARTISTS = [
       { name:'Maya R.', genre:'Nashville Folk', bio:'Specializes in raw, emotional storytelling.', songs:'3,200+',
         photo:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face',
@@ -545,7 +545,7 @@
                   ? <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12"/>
                   : <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16"/>}
               </svg>
-              <span style={{ fontSize:'0.55rem', fontWeight:400, letterSpacing:'0.08em', textTransform:'uppercase', color:'rgba(253,251,247,0.7)' }}>Menu</span>
+              <span style={{ fontSize:'0.55rem', fontWeight:400, letterSpacing:'0.08em', textTransform:'uppercase', color:'rgba(253,251,247,0.7)', marginTop:'0.15rem' }}>Menu</span>
             </button>
           </div>
           {/* Mobile menu */}
@@ -658,7 +658,7 @@
                 <a href="#inspiration" style={{ fontSize:'0.9rem', fontWeight:500, color:'#3a3a3a', textDecoration:'underline', textUnderlineOffset:'3px', letterSpacing:'0.02em', transition:'color 0.2s' }}
                   onMouseOver={e => e.target.style.color='#D4AF37'}
                   onMouseOut={e => e.target.style.color='#3a3a3a'}
-                >🎧 Listen to Examples</a>
+                ><span style={{ display:'inline-block', filter:'grayscale(1) brightness(0.3)' }}>🎧</span> Listen to Examples</a>
               </div>
             </div>{/* end frosted panel */}
 
@@ -700,7 +700,7 @@
     /* ── Genre Pills ── */
     function GenreScroller() {
       return (
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(3, auto)', gap:'0.4rem', justifyContent:'center', marginTop:'0.75rem' }}>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(4, auto)', gap:'0.4rem', justifyContent:'center', marginTop:'0.75rem' }}>
           {GENRES.map(g => (
             <span key={g} style={{
               padding:'0.35rem 0.75rem', borderRadius:'9999px',
@@ -750,7 +750,7 @@
                   </div>
                   {/* Desktop title */}
                   <h3 className="step-title-desktop" style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'1.25rem', fontWeight:600, color:'#0F172A', margin:'0 0 0.75rem' }}>{s.title}</h3>
-                  <p style={{ fontSize:'0.85rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.7)', maxWidth:'18rem', margin:'0 auto' }}>{s.body}</p>
+                  <p style={{ fontSize:'0.85rem', fontWeight:300, lineHeight:1.7, color:'rgba(15,23,42,0.7)', maxWidth:'18rem', margin:'0 auto', textAlign:'left' }}>{s.body}</p>
                   {s.hasOccasionPills && <OccasionPills onStart={onStart} />}
                   {s.hasGenreScroller && <GenreScroller />}
                 </div>
@@ -786,7 +786,7 @@
           <div style={{ maxWidth:'72rem', margin:'0 auto' }}>
             <div style={{ textAlign:'center', marginBottom:'2.5rem' }}>
               <h2 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontSize:'clamp(2rem,4vw,3rem)', fontWeight:700, color:'#0F172A', margin:0 }}>
-                Songs That Stopped Time.
+                Songs That<br className="md:hidden" /> Stopped Time.
               </h2>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'1.5rem' }}>
@@ -1723,8 +1723,8 @@
         const checkHash = () => {
           const hash = window.location.hash;
           if (hash === '#start') { setShowIntake(true); setPage(null); }
-          else if (hash === '#privacy') { setPage('privacy'); setShowIntake(false); }
-          else if (hash === '#terms') { setPage('terms'); setShowIntake(false); }
+          else if (hash === '#privacy') { setPage('privacy'); setShowIntake(false); window.scrollTo(0,0); }
+          else if (hash === '#terms') { setPage('terms'); setShowIntake(false); window.scrollTo(0,0); }
           else { setPage(null); }
         };
         checkHash();
