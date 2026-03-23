@@ -116,7 +116,6 @@
       font-size: 0.9375rem;
       letter-spacing: 0.02em;
       transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-      animation: pulseGold 2.8s ease-in-out infinite;
       white-space: nowrap;
       cursor: pointer;
       border: none;
@@ -271,7 +270,7 @@
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root" style="overflow-x:hidden;max-width:100vw"></div>
 
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
@@ -643,19 +642,19 @@
               {/* Headline */}
               <div className="anim-1" style={{ marginBottom:'1rem' }}>
                 <h1 style={{ fontFamily:"'Playfair Display',Georgia,serif", fontWeight:700, lineHeight:1.2, margin:0, textAlign:'center' }}>
-                  <span style={{ display:'block', fontSize:'clamp(2rem,5.5vw,3.5rem)', letterSpacing:'0.02em', color:'#0F172A' }}>Get a Custom Song</span>
-                  <span style={{ display:'block', fontSize:'clamp(2rem,5.5vw,3.5rem)', letterSpacing:'0.02em', color:'#0F172A' }}>in 24 Hrs.</span>
+                  <span style={{ display:'block', fontSize:'clamp(1.75rem,5vw,3.5rem)', letterSpacing:'0.02em', color:'#0F172A' }}>Get a Custom Song</span>
+                  <span style={{ display:'block', fontSize:'clamp(1.75rem,5vw,3.5rem)', letterSpacing:'0.02em', color:'#0F172A' }}>in 24 Hrs.</span>
                 </h1>
               </div>
 
               {/* Body line */}
-              <p className="anim-2" style={{ fontSize:'0.9rem', fontWeight:400, lineHeight:1.7, color:'rgba(15,23,42,0.65)', margin:'0 0 1.25rem', textAlign:'center' }}>
+              <p className="anim-2" style={{ fontSize:'0.82rem', fontWeight:400, lineHeight:1.7, color:'rgba(15,23,42,0.65)', margin:'0 0 1.25rem', textAlign:'center' }}>
                 Let our professional musicians create an original studio-quality song for just $79.
               </p>
 
               {/* CTAs */}
               <div className="anim-3" style={{ display:'flex', flexWrap:'wrap', gap:'1rem', alignItems:'center', justifyContent:'center' }}>
-                <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
+                <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem', animation:'none' }}>Start My Song →</button>
                 <a href="#inspiration" style={{ fontSize:'0.9rem', fontWeight:500, color:'#3a3a3a', textDecoration:'underline', textUnderlineOffset:'3px', letterSpacing:'0.02em', transition:'color 0.2s' }}
                   onMouseOver={e => e.target.style.color='#D4AF37'}
                   onMouseOut={e => e.target.style.color='#3a3a3a'}
@@ -768,7 +767,7 @@
               ))}
             </div>
             <div style={{ marginTop:'4rem', display:'flex', justifyContent:'center' }}>
-              <a href="#" onClick={e=>{e.preventDefault();onStart&&onStart();}} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</a>
+              <a href="#" onClick={e=>{e.preventDefault();onStart&&onStart();}} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem', animation:'pulseGold 2.8s ease-in-out infinite' }}>Start My Song →</a>
             </div>
           </div>
         </section>
@@ -848,7 +847,7 @@
             </div>
             {/* CTA */}
             <div style={{ marginTop:'4rem', display:'flex', justifyContent:'center' }}>
-              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem', animation:'pulseGold 2.8s ease-in-out infinite' }}>Start My Song →</button>
             </div>
           </div>
         </section>
@@ -920,7 +919,7 @@
             </p>
             {/* CTA */}
             <div style={{ marginTop:'3rem', display:'flex', justifyContent:'center' }}>
-              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem', animation:'pulseGold 2.8s ease-in-out infinite' }}>Start My Song →</button>
             </div>
           </div>
         </section>
@@ -963,7 +962,7 @@
             })}
             {/* CTA */}
             <div style={{ marginTop:'3rem', display:'flex', justifyContent:'center' }}>
-              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
+              <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem', animation:'pulseGold 2.8s ease-in-out infinite' }}>Start My Song →</button>
             </div>
           </div>
         </section>
@@ -989,7 +988,7 @@
                 Join hundreds of happy customers who gave the one gift that can never be forgotten, returned, or replaced.
               </p>
               <div style={{ display:'flex', flexWrap:'wrap', alignItems:'center', justifyContent:'center', gap:'1rem' }}>
-                <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem' }}>Start My Song →</button>
+                <button onClick={onStart} className="btn-gold" style={{ padding:'1rem 2rem', fontSize:'1rem', animation:'pulseGold 2.8s ease-in-out infinite' }}>Start My Song →</button>
                 <p style={{ fontSize:'0.75rem', fontWeight:300, color:'rgba(253,251,247,0.3)', margin:0 }}>24-hour delivery</p>
               </div>
               {/* Decorative staff */}
