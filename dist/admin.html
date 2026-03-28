@@ -49,6 +49,7 @@
       -webkit-font-smoothing: antialiased;
       margin: 0;
     }
+    ::-moz-selection { background: rgba(212,175,55,0.3); color: #FDFBF7; }
     ::selection { background: rgba(212,175,55,0.3); color: #FDFBF7; }
 
     .btn-gold {
@@ -109,6 +110,9 @@
     }
     .admin-input:focus {
       border-color: rgba(212,175,55,0.6);
+    }
+    .admin-input::-moz-placeholder {
+      color: rgba(253,251,247,0.3);
     }
     .admin-input::placeholder {
       color: rgba(253,251,247,0.3);
