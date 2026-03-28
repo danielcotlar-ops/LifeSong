@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { supabase } from './supabaseClient'
 
 /* ─── Data ───────────────────────────────────────── */
 const HERO_VIDEOS = [
@@ -1262,6 +1263,7 @@ function IntakeEngine({ onClose }) {
   const [formData, setFormData] = useState({ energy: 'medium' })
   const [direction, setDirection] = useState('forward')
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
   const totalSteps = FORM_CONFIG.length
   const config = FORM_CONFIG[step]
 
@@ -1277,7 +1279,28 @@ function IntakeEngine({ onClose }) {
     return val !== undefined && val !== ''
   })
 
-  const handleSubmit = () => { console.log('LIFESONG INTAKE SUBMIT:', formData); setSubmitted(true) }
+  const handleSubmit = async () => {
+    if (submitting) return
+    setSubmitting(true)
+    const { error } = await supabase.from('song_requests').insert({
+      recipient_name: formData.recipientName,
+      occasion: formData.occasion,
+      tone: formData.tone,
+      energy: formData.energy,
+      feelings: formData.feelings,
+      relationship: formData.relationship,
+      themes: formData.themes,
+      chorus_hook: formData.chorusHook || null,
+      golden_memory: formData.goldenMemory || null,
+      avoid: formData.avoid || null,
+    })
+    if (error) {
+      console.error('Supabase insert error:', error)
+      setSubmitting(false)
+      return
+    }
+    setSubmitted(true)
+  }
 
   return (
     <div className="fixed inset-0 z-[100] flex flex-col bg-navy">
@@ -1338,15 +1361,16 @@ function IntakeEngine({ onClose }) {
               ) : (
                 <button
                   onClick={config.id === 'review' ? handleSubmit : goNext}
-                  disabled={!canProceed && config.id !== 'review'}
+                  disabled={submitting || (!canProceed && config.id !== 'review')}
                   className="rounded-full px-8 py-3 text-sm font-semibold tracking-wide transition-all"
                   style={{
                     background: canProceed || config.id === 'review' ? 'linear-gradient(135deg,#D4AF37,#B8962E)' : 'rgba(212,175,55,0.15)',
                     color: canProceed || config.id === 'review' ? '#0F172A' : 'rgba(253,251,247,0.25)',
-                    cursor: canProceed || config.id === 'review' ? 'pointer' : 'not-allowed',
+                    cursor: submitting || (!canProceed && config.id !== 'review') ? 'not-allowed' : 'pointer',
+                    opacity: submitting ? 0.6 : 1,
                     border: 'none',
                   }}
-                >{config.id === 'review' ? 'Submit My Song →' : 'Continue →'}</button>
+                >{config.id === 'review' ? (submitting ? 'Submitting…' : 'Submit My Song →') : 'Continue →'}</button>
               )}
             </div>
           </div>
